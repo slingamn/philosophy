@@ -109,7 +109,7 @@ $\int f(x) dx = 1$ (Kolmogorov)
 For $i = 1 \ldots n$, $\int f(x) r_i(x) dx = \alpha_i$ ($f$ conforms to $n$ measured statistics, e.g., if $x$ is real-valued and $r_1(x) = x$ then $\alpha_1 = E[x]$, the mean or expected value)
 \end{enumerate}
 we wish to maximize the Shannon entropy of $f$:
-$$h(f) = - \int f(x) \ln (x) dx$$
+$$h(f) = - \int f(x) \ln (f(x)) dx$$
 Note in passing that over a discrete space, this would be:
 $$h(f) = - \sum f(x) \ln f(x)$$
 It can be proven that the minimizing $f$ must have the form
@@ -147,9 +147,13 @@ Throughout the paper, Skyrms seems to be saying, ``Let's add second-order probab
 
 \section{Sources}
 
-Cover, T. and Thomas, J. ``Elements of Information Theory.''
+Cover, T. and Thomas, J. ``Elements of Information Theory.'' 2006.
 
-Skyrms, B. ``Higher order degrees of belief.''
+Field, H. ``A Note on Jeffrey Conditionalization.'' 1978.
+
+Jaynes, E. T. ``Information Theory and Statistical Mechanics.'' 1957.
+
+Skyrms, B. ``Higher order degrees of belief.'' 1980.
 
 Wikipedia.
 \end{document}
