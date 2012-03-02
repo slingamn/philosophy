@@ -1,0 +1,155 @@
+\documentclass[letterpaper,12pt]{article}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+\setlength{\voffset}{-1 in}
+\addtolength{\textheight}{2.15 in}
+
+\renewcommand{\implies}{\rightarrow}
+\newcommand{\pr}{\text{pr}}
+\newcommand{\Prob}{\text{Pr}}
+%\newcommand{\PR}{\text{PR}}
+\newcommand{\dom}{\mathrm{dom\ }}
+\newcommand{\rng}{\mathrm{rng\ }}
+
+
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\N}{\mathbb{N}}
+
+\renewcommand{\O}{\mathfrak{O}}
+\newcommand{\T}{\mathfrak{T}}
+\newcommand{\proves}{\vdash}
+
+\renewcommand{\phi}{\varphi}
+
+\newtheorem{definition}{Definition}
+\newtheorem{claim}{Claim}
+
+\begin{document}
+\title{Skyrms's ``Higher Order Degrees of Belief''}
+\author{Shivaram Lingamneni}
+\maketitle
+
+\section{Logical structure}
+Disclaimers: I don't agree with Skyrms, I don't understand many of his points, and I may not understand his overall goals.
+
+By his own admission, Skyrms is performing two fairly distinct tasks:
+\begin{enumerate}
+\item
+Defending higher-order probabilities against accusations of ``inconsistency, illegitimacy, and triviality'' (and also irrelevance)
+\item
+Developing (sketches of) formal systems that include higher-order probabilities
+\end{enumerate}
+The relationship between the two efforts is unclear. Are properties (robustness, elegance) of the formal systems intended to buttress the original case for having higher-order probabilities at all? It seems likely (e.g., page 118).
+
+\section{Apologetic}
+\subsection{The ``Cantor's theorem'' paradox}
+Higher-order beliefs appear to require the construction of a type hierarchy, or perhaps an untyped cumulative hierarchy, as in set theory. The alternative is outright inconsistency (pg. 110). Good and Savage seem to have raised objections along these lines.
+\subsection{Miller's paradox}
+David Miller claims the following inconsistency arises in higher-order formal systems (with a single undifferentiated probability operator):
+\begin{enumerate}
+\item
+$\Prob(\neg E) = \Prob(E \mid \Prob(E) = \Prob(\neg E))$
+\item
+$\Prob(E \mid \Pr(E) = \Pr(\neg E)) = \frac{1}{2}$
+\item
+$\Prob(\neg E) = \frac{1}{2}$
+\end{enumerate}
+This is bad. Also, if we take $E$ to be $\bot$, it immediately contradicts the Kolmogorov axioms, which set $P(\top) = 1$.
+	
+Skyrms resolves the paradox by saying that it equivocates on the de dicto / de re distinction --- specifically he wants to block the introduction of premise 1 when $P(E) \not = \frac{1}{2}$. I don't understand his resolution; it seems to me that when $P(E) \not = \frac{1}{2}$, both premises can be criticized equally as conditioning on an event with probability $0$.
+\subsection{De Finetti's objection}
+De Finetti holds that higher-order probabilities are meaningless ``opinions'' and not facts about the world; Skyrms replies that in practice, we don't know our own minds, so our opinions are legitimate objects of study about which we may have legitimate doubts.
+\subsection{Savage's objection}
+Savage objects that higher-order probabilities induce an infinite hierarchy (which is bad) with an infinite structure of consistency conditions (even worse); the conditions take the form $P_i(B) = E(P_{i+1}(B))$, i.e., your degree of belief is the expected value of your higher-order degree of belief.
+
+Skyrms seems to reply that there is \emph{genuine content} associated with this hierarchy --- you can have the same first-order belief but distinct second-order beliefs, corresponding to distinct levels of sureness --- so we need the hierarchy to describe what's happening. (Your first-order belief is the expected value or mean of your second-order belief --- but your second-order belief could additionally exhibit low or high variance, corresponding to your sureness.)
+
+\section{Formal systems}
+\subsection{Jeffrey conditionalization}
+Skyrms first discusses what conditionalization is and why it's a good thing. I'm guessing we all more or less agree with him there.
+
+He then gives a definition (pg. 122) of ``Probability Kinematics'', that is to say, Jeffrey conditionalization over a ``partition'' of mutually exclusive events $\{p_i \mid i = 1 \ldots n \}$. for two probability measures (or distributions) $\Prob_i$ and $\Prob_f$. The thrust of this is that $\Prob_i$ and $\Prob_f$ \emph{agree on all conditional probabilities} over the elements of the partition. Thus, coherence implies that $\Prob_f$'s unconditional probabilities may be interpreted as Jeffrey updates from $\Prob_i$'s unconditional probabilities and the shared conditional probabilities.
+
+(Aside: what's the foundation for supposing that we can describe all-or-most knowledge in such a framework? Do the unchanging conditional probabilities reflect a fixed underlying model of causality, e.g., physics?)
+\subsection{Higher-order belief}
+Skyrms now makes the case that it is epistemologically necessary to be able to work with uncertainty about one's first-order beliefs (pg. 122): ``the assumption that every observation can be interpreted as conferring certainty to some observational proposition leads to an unacceptable epistemology of the given.''
+
+Skyrms appears to be anticipating the following objection: his system has a first-order ``I see a green cloth'' and a second-order ``but I'm not sure about that.'' Why not fold these into a single first-order observation ``I had an indistinct visual sensation of a green cloth,'' and model our uncertainty by lowering the conditional probabilities associated with the observation? Skyrms seems to be holding that the idealizing assumptions here (that we can perfectly describe our indistinct visual sensation) are too steep.
+
+Aside: later on (pg. 126), he alludes to the desirability of isolating ``purely observational probabilities'', claims that Hartry Field has succeeded in doing this\footnote{Field's contribution appears to be a technical reparametrization of Jeffrey conditionalization; he explicitly disclaims having philosophically justified that his new parameter isolates purely observational data.}, and uses this to support the case for higher-order probability: we need it to account for ``weighting'' of observations according to our sureness of them. So this doesn't contradict his earlier position, but it seems to involve a comparable idealizing assumption to the one he rejected: how can we extract the pure observational content of an experience?
+
+\subsection{Skyrms shows us the money: the sufficiency and Miller conditions}
+At this point, Skyrms constructs a formal system which incorporates first-order and second-order probabilities. He then states/proves an equivalence: conditionalization on first-order beliefs coincides with probability kinematics on a partition $p_j$ iff, for $q$ any first-order proposition, for all elements $p_j$ of the partition:
+$$\text{PR}(q \mid p_j \land \bigwedge_i \text{pr}(p_i) = a_i) = \text{PR}(q \mid p_j)$$
+This is the \emph{sufficiency condition} and it asserts that your second-order beliefs are causally inert --- your beliefs about your beliefs do not affect interactions between real-world propositions. This seems to correspond exactly with the defining assumption of probability kinematics, that the conditional probabilities remain constant.
+
+Furthermore, it is natural to also require the \emph{generalized Miller condition}: for all elements $p_j$ of the partition:
+$$\text{PR}(p_j \mid \bigwedge_i \text{pr}(p_i) = a_i) = a_j$$
+which asserts explicitly that your final probability for a first-order proposition must be exactly your first-order probability for it.
+
+Question: what does it mean to condition on second-order probabilities? Is this the operation of introspecting, realizing that you have certain beliefs, then updating your other beliefs based on them? Skyrms's definition of probability kinematics avoids relating these ideas to an explicitly specified process of belief update.
+
+Skyrms observes in passing that if the first-order probabilities are not causally inert (the ``exchangeable sequence'' example, in which they are intrinsic propensities, and the ``Black Bart'' example, in which the agent performs some implausible feats of introspection on his or her involuntary physical reactions), the sufficiency condition fails.
+
+\subsection{The sunrise problem}
+On pages 129 and 130, Skyrms gives an exposition of the ``sunrise problem'' --- estimating the underlying parameter of a Bernoulli random variable given a vector of past observations (e.g., the probability that the sun will rise tomorrow, given that it has risen every day so far). I'm not sure what the significance of this is; it looks like a standard Bayesian analysis and does not appear to refer to higher-order probabilities.
+
+\section{Information theory}
+\subsection{Jaynes implies Jeffrey (and possibly the reverse)}
+Pages 131-134 relate E. T. Jaynes's understanding of inference to Jeffrey conditionalization. Informally, Jaynes gives the following principle: ``given new evidence, update your distribution in a way that minimizes the information gain.''
+
+In his 1957 paper, Jaynes describes the general process of finding the maximum entropy estimate of a distribution given some observations (or statistics computed from the observations). He characterizes (or motivates) it as ``the least biased estimate possible on the given information'', or ``maximally noncommittal with regard to missing information.'' Let $f$ be a probability density. Given the following constraints:
+\begin{enumerate}
+\item
+$f(x) \geq 0$ (Kolmogorov)
+\item
+$\int f(x) dx = 1$ (Kolmogorov)
+\item
+For $i = 1 \ldots n$, $\int f(x) r_i(x) dx = \alpha_i$ ($f$ conforms to $n$ measured statistics, e.g., if $x$ is real-valued and $r_1(x) = x$ then $\alpha_1 = E[x]$, the mean or expected value)
+\end{enumerate}
+we wish to maximize the Shannon entropy of $f$:
+$$h(f) = - \int f(x) \ln (x) dx$$
+Note in passing that over a discrete space, this would be:
+$$h(f) = - \sum f(x) \ln f(x)$$
+It can be proven that the minimizing $f$ must have the form
+$$f(x) = \exp [\lambda_0 - 1 + \sum_{i=1}^n \lambda_i r_i(x)]$$
+where the $\lambda_i$ are constant Lagrange multipliers. This is the so-called maximum entropy distribution (sometimes ``Gibbs distribution''), and is the ``proper exponential form'' that Skyrms alludes to at the very end of the paper. This distribution arises in statistical mechanics, where it's used to maximize the entropy of statistical systems like gases; Jaynes's insight was to apply it to other domains.
+
+That's the principle applied to the estimation of distributions from scratch, but how do we apply it to the problem of updating an existing distribution? The ``information gain'' between two distributions $P$ and $Q$ is measured by the Kullback-Leibler divergence $D(P \mid Q)$, a.k.a. ``relative entropy''. In the discrete case:
+$$D(P\mid Q) = \sum_i P(i) \ln \frac{P(i)}{Q(i)}$$
+Compare with the discrete case of Shannon entropy above. In the continuous real-valued case:
+$$D(P\mid Q) = \int_{-\infty}^\infty p(x) \ln \frac{p(x)}{q(x)} dx$$
+and in the case where the random variable is part of an arbitrary measure space, and $P$ and $Q$ are absolutely continuous w.r.t. an underlying measure $\lambda$ (I \emph{think} this is the right hypothesis):
+$$D(P\mid Q) = \int p(x) \ln \frac{p(x)}{q(x)} \mathrm{d}\lambda(x)$$
+and when $P$ and $Q$ are absolutely continuous w.r.t. each other, and $\frac{\mathrm{d}P}{\mathrm{d}Q}$ is the Radon-Nikodym derivative of $P$ with respect to $Q$:
+$$D(P \mid Q) = \int \ln \frac{\mathrm{d}P}{\mathrm{d}Q} \mathrm{d}P$$
+so Jaynes says that if your initial distribution/model/measure is $Q$ and you have new evidence (``statistics''), you should move to the $P$ that conforms to those statistics while minimizing $D(P\mid Q)$. 
+
+So what Skyrms seems to be proving is that:
+\begin{enumerate}
+\item
+If you update your density function $f_1$ to $f_2$ in a way that minimizes relative entropy while preserving statistics over a set $p_1, p_2 \ldots$, then $f_1$ and $f_2$ must satisfy a generalization of probability kinematics, i.e., constancy of probabilities conditioned on the $p_i$.
+\item
+In the discrete case, if you update your density function $f_1$ to $f_2$ according to probability kinematics in the above sense, then $f_2$ will be the distribution minimizing relative entropy. (This result may or may not extend to the continuous/uncountable case.)
+\end{enumerate}
+
+\subsection{But what does this mean?}
+One of Skyrms's side claims is that the ``sufficiency condition'' (inertness of second-order probabilities) corresponds to the information-theoretic notion of ``sufficient statistic'' (one that loses no information; for example, when sampling from a normal distribution, the sample mean is a sufficient statistic for the population mean). This seems non-obvious and a significant insight. However, the precise formulation and justification of the correspondence are unclear to me at this time.
+
+Furthermore, Skyrms asserts that ``counter instances to the sufficiency condition are counter instances to both probability kinematics and the minimum relative information principle.'' So this seems like a very useful criterion; we can try and identify classes of situations, such as the exchangeable sequence and Black Bart examples, where Jaynesian inference doesn't apply.
+
+On the other hand, he also acknowledges (pg. 135) that the sufficiency condition and generalized Miller condition are not adequate to recover the maximum entropy estimate (i.e., the exponential formula described above). So the systems in this paper appear to be proper weakenings of Jaynesian inference.
+
+But what does this have to do with higher-order probabilities? The fact that Jeffrey conditionalization and Jaynesian maximum entropy inference are in some sense equivalent is surely important. But does it bolster the case for higher-order probabilities? Only, I think, inasmuch as it shows their applicability to an additional setting (arbitrary measure spaces) --- since the sufficiency condition can be generalized there, so can Jeffrey conditionalization, and Skyrms's proof shows that it accords with another accepted technique, namely Jaynesian inference. But this does not seem like independent confirmation of the validity of Skyrms's higher-order system. As in the discrete case, the sufficiency condition was tailor-made to agree with Jeffrey conditionalization.
+
+Throughout the paper, Skyrms seems to be saying, ``Let's add second-order probabilities to our system, but let's have them do as little as possible. Then they will agree with existing systems that don't have second-order probabilities.'' Whether you believe this will probably depend on how much you believe his original contention: that we need higher-order probability for underlying epistemological reasons.
+
+\section{Sources}
+
+Cover, T. and Thomas, J. ``Elements of Information Theory.''
+
+Skyrms, B. ``Higher order degrees of belief.''
+
+Wikipedia.
+\end{document}
