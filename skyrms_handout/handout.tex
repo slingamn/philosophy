@@ -57,13 +57,23 @@ $\Prob(\neg E) = \frac{1}{2}$
 \end{enumerate}
 This is bad. Also, if we take $E$ to be $\bot$, it immediately contradicts the Kolmogorov axioms, which set $P(\top) = 1$.
 	
-Skyrms resolves the paradox by saying that it equivocates on the de dicto / de re distinction --- specifically he wants to block the introduction of premise 1 when $P(E) \not = \frac{1}{2}$. I don't understand his resolution; it seems to me that when $P(E) \not = \frac{1}{2}$, both premises can be criticized equally as conditioning on an event with probability $0$.
-\subsection{De Finetti's objection}
-De Finetti holds that higher-order probabilities are meaningless ``opinions'' and not facts about the world; Skyrms replies that in practice, we don't know our own minds, so our opinions are legitimate objects of study about which we may have legitimate doubts.
-\subsection{Savage's objection}
-Savage objects that higher-order probabilities induce an infinite hierarchy (which is bad) with an infinite structure of consistency conditions (even worse); the conditions take the form $P_i(B) = E(P_{i+1}(B))$, i.e., your degree of belief is the expected value of your higher-order degree of belief.
+Skyrms resolves the paradox by blocking the introduction of premise 1 when $P(E) \not = \frac{1}{2}$. His objection is that there is an equivocation on the de dicto / de re distinction. Personally I don't fully understand Skyrms's argument, but here's a possibly equivalent one: there is an equivocation on the meaning of $\mid$, or ``given that.''
 
-Skyrms seems to reply that there is \emph{genuine content} associated with this hierarchy --- you can have the same first-order belief but distinct second-order beliefs, corresponding to distinct levels of sureness --- so we need the hierarchy to describe what's happening. (Your first-order belief is the expected value or mean of your second-order belief --- but your second-order belief could additionally exhibit low or high variance, corresponding to your sureness.)
+In premise 2, $\mid$ may be read as ``after restricting to cases in which $\text{Pr}(E) = \text{Pr}(\neg E)$'', i.e., the standard definition of a conditional probability $P(A \mid B)$ as the probability of $A$ relativized to the subset of the space in which $B$ occurs. All situations where $\text{Pr}(E) = \text{Pr}(\neg E)$ must have $\text{Pr}(E) = .5$, so if we consider only those cases it seems we are compelled to reach a final probability of $\text{Pr}(E) = .5$, and thus to believe premise 2.
+
+However, for premise 1 to be plausible, we must read $\mid$ as ``logical consequence under the assumption that $\text{Pr}(E) = \text{Pr}(\neg E)$''. Under a reading where $\mid$ performs restriction/relativization, as before, premise 1 is false; if our overall estimate of $\text{Pr}(\neg E)$ is influenced by cases where $\text{Pr}(E) = \text{Pr}(\neg E)$ does not hold, then it might be greater or less than $.5$. (Imagine 10 equally likely possible worlds; in 9 of them, $\Prob(E) = .9$, but in the last one, $\Prob(E) = \Prob(\neg E) = .5$. Then if we aggregate over all the worlds, we get $\Prob(\neg E) = .14$, but $\Prob(E \mid \Prob(E) = \Prob(\neg E)) = .5$.)
+
+\subsection{De Finetti's objection}
+De Finetti holds that higher-order probabilities are only attitudes or emotions, and therefore not events that can have probabilities. Skyrms replies that he prefers Ramsey's pragmatism, in which beliefs have causal properties, since they are propensities to act.
+
+Skyrms relates (but does not identify) this objection with another, that higher-order probabilities are trivial (i.e., always $0$ or $1$). In practice, we seem not to know our own minds; our beliefs are legitimate objects of uncertainty. Skyrms sees both of these replies as related to a dichotomy between ``positivism'' and ``pragmatism''.
+
+\subsection{Savage's objection}
+Savage objects that higher-order probabilities induce an infinite hierarchy (which is bad) with an infinite structure of consistency conditions (even worse); the conditions take the form $P_i(B) = E(P_{i+1}(B))$, i.e., your degree of belief is the expected value of your higher-order degree of belief. Savage suggests that it might be preferable to model uncertain degrees of belief via (for example) a convex set of probability measures.
+
+Skyrms seems to reply that higher-order beliefs are themselves beliefs --- modeling uncertainty in first-order beliefs (e.g., Savage's convex sets) does not solve the problem of modeling the agent's own awareness of that uncertainty (Skyrms's higher-order system).
+
+Skyrms affirms that first-order belief should be the expected value or mean of the corresponding second-order belief, but notes that the second-order belief can additionally exhibit low or high variance, corresponding to the agent's sureness.
 
 \section{Formal systems}
 \subsection{Jeffrey conditionalization}
@@ -90,7 +100,26 @@ which asserts explicitly that your final probability for a first-order propositi
 
 Question: what does it mean to condition on second-order probabilities? Is this the operation of introspecting, realizing that you have certain beliefs, then updating your other beliefs based on them? Skyrms's definition of probability kinematics avoids relating these ideas to an explicitly specified process of belief update.
 
-Skyrms observes in passing that if the first-order probabilities are not causally inert (the ``exchangeable sequence'' example, in which they are intrinsic propensities, and the ``Black Bart'' example, in which the agent performs some implausible feats of introspection on his or her involuntary physical reactions), the sufficiency condition fails.
+Skyrms observes in passing that if the first-order probabilities are not causally inert, the sufficiency condition fails. These are worth a look:
+
+\subsubsection{Exchangeable sequence}
+Skyrms points out that sufficiency fails when $\text{pr}$ is interpreted as objective probability (``propensity probability'', ``chance''), essentially since chances have real-world consequences. His example is as follows: consider two coins, one with $\text{pr}(H) = .25$ ($C_a$), one with $\text{pr}(H) = .75$ ($C_b$). With probability $.5$, pick $C_a$ and generate an infinite sequence of flips; with probability $.5$, pick $C_b$ and do likewise. Given the events $\{H_i \mid i = 1, 2, 3, \ldots\}$, where $H_i$ denotes a result of heads on the $i$th flip, let $\text{PR}$ describe the overall probability of the event (i.e., incorporating the mixing over the coins), then let $\text{pr}$ describe the objective probability of the event (i.e., $.75$ or $.25$ depending on what coin we're using).
+
+Now we may compute:
+$$\text{PR}(H_2 \mid \text{pr}(H_1) = .75) = \text{PR}(H_2 \mid C_b) = .75$$
+i.e., since the coin's chance is constant across all flips, and
+$$\text{PR}(H_2 \mid H_1 \land \text{pr}(H_1) = .75) = \text{PR}(H_2 | H_1 \land C_b) = .75$$
+since knowing which coin it is screens off all evidence from actual flips. (Skyrms points out that this is the reverse of the sufficiency condition, which says that actual events should screen off evidence of the form $\text{pr}(a) = j$.) But, by contrast:
+$$\text{PR}(H_2 \mid H_1) = \frac{\text{PR}(H_2 \land H_2)}{\text{PR}(H_1)}$$
+$$= \frac{\text{PR}(H_1 \land H_2 \mid C_a)\text{PR}(C_a) + \text{PR}(H_1 \land H_2 \mid C_b)\text{PR}(C_b)}{\text{PR}(H_1 \mid C_a)\text{PR}(C_a) + \text{PR}(H_2 \mid C_b)\text{PR}(C_b)} = \frac{.25^2 \cdot .5 + .75^2 \cdot .5}{.5 \cdot .25 + .5 \cdot .75}$$
+which equals $.625$, rather than $.75$ as before. (Skyrms has $\frac{9}{16} = .5625$, but I think $.625$ is right; the argument stands either way.)
+
+\subsubsection{Black Bart}
+Skyrms also points out that mental states can cause objective physical phenomena, via involuntary physical reactions; thus, higher-order probabilities can have first-order consequences, violating the sufficiency condition.
+
+Skyrms's example is an event $K$, ``Black Bart will try to kill me'', and an event $S$, ``I will sweat when I see Black Bart.'' Skyrms points out that $\text{PR}(S \mid K) < \text{PR}(S \mid K \land \text{pr}(K) = .99)$, i.e., my credence in $S$ is influenced not by $K$ itself (since I have no direct access to Black Bart's intentions), but by $\text{pr}(K)$ (since my subjective estimate of his intentions is what causes me to sweat).
+
+The agent here is clearly highly idealized; he has involuntary reactions but also precise introspection over them. One might suspect this example involves some kind of fallacious reification?
 
 \subsection{The sunrise problem}
 On pages 129 and 130, Skyrms gives an exposition of the ``sunrise problem'' --- estimating the underlying parameter of a Bernoulli random variable given a vector of past observations (e.g., the probability that the sun will rise tomorrow, given that it has risen every day so far). I'm not sure what the significance of this is; it looks like a standard Bayesian analysis and does not appear to refer to higher-order probabilities.
@@ -120,7 +149,7 @@ That's the principle applied to the estimation of distributions from scratch, bu
 $$D(P\mid Q) = \sum_i P(i) \ln \frac{P(i)}{Q(i)}$$
 Compare with the discrete case of Shannon entropy above. In the continuous real-valued case:
 $$D(P\mid Q) = \int_{-\infty}^\infty p(x) \ln \frac{p(x)}{q(x)} dx$$
-and in the case where the random variable is part of an arbitrary measure space, and $P$ and $Q$ are absolutely continuous w.r.t. an underlying measure $\lambda$ (I \emph{think} this is the right hypothesis):
+and in the case where the random variable is part of an arbitrary measure space, and $p$ and $q$ are density functions absolutely continuous w.r.t. an underlying measure $\lambda$ (I \emph{think} this is the right hypothesis):
 $$D(P\mid Q) = \int p(x) \ln \frac{p(x)}{q(x)} \mathrm{d}\lambda(x)$$
 and when $P$ and $Q$ are absolutely continuous w.r.t. each other, and $\frac{\mathrm{d}P}{\mathrm{d}Q}$ is the Radon-Nikodym derivative of $P$ with respect to $Q$:
 $$D(P \mid Q) = \int \ln \frac{\mathrm{d}P}{\mathrm{d}Q} \mathrm{d}P$$
@@ -143,7 +172,8 @@ On the other hand, he also acknowledges (pg. 135) that the sufficiency condition
 
 But what does this have to do with higher-order probabilities? The fact that Jeffrey conditionalization and Jaynesian maximum entropy inference are in some sense equivalent is surely important. But does it bolster the case for higher-order probabilities? Only, I think, inasmuch as it shows their applicability to an additional setting (arbitrary measure spaces) --- since the sufficiency condition can be generalized there, so can Jeffrey conditionalization, and Skyrms's proof shows that it accords with another accepted technique, namely Jaynesian inference. But this does not seem like independent confirmation of the validity of Skyrms's higher-order system. As in the discrete case, the sufficiency condition was tailor-made to agree with Jeffrey conditionalization.
 
-Throughout the paper, Skyrms seems to be saying, ``Let's add second-order probabilities to our system, but let's have them do as little as possible. Then they will agree with existing systems that don't have second-order probabilities.'' Whether you believe this will probably depend on how much you believe his original contention: that we need higher-order probability for underlying epistemological reasons.
+Throughout the paper, Skyrms seems to be saying, ``Let's add second-order probabilities to our system, but let's have them do as little as possible. Then they will agree with existing systems that don't have second-order probabilities.'' Whether you believe this will probably depend on how much you believe his original contention: that we need higher-order probability for underlying epistemological reasons.\footnote{Skyrms cites Ramsey on this point: ``Ramsey thinks of personal probabilities as theoretical parts of an imperfect but useful psychological useful model'' (pg. 115). But has Skyrms shown that higher-order probabilities are a useful part of the useful model? As far as I can determine, Black Bart is the only time they're actually \emph{used} --- and this is exactly the case the system fails to describe.}
+
 
 \section{Sources}
 
