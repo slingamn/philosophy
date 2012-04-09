@@ -1,0 +1,75 @@
+\documentclass[letterpaper,12pt]{article}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+\setlength{\voffset}{-1 in}
+\addtolength{\textheight}{2.15 in}
+
+\renewcommand{\implies}{\rightarrow}
+\newcommand{\pr}{\text{pr}}
+\newcommand{\Prob}{\text{Pr}}
+%\newcommand{\PR}{\text{PR}}
+\newcommand{\dom}{\mathrm{dom\ }}
+\newcommand{\rng}{\mathrm{rng\ }}
+
+
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\N}{\mathbb{N}}
+
+\renewcommand{\O}{\mathfrak{O}}
+\newcommand{\T}{\mathfrak{T}}
+\newcommand{\proves}{\vdash}
+
+\renewcommand{\phi}{\varphi}
+
+\newtheorem{definition}{Definition}
+\newtheorem{claim}{Claim}
+
+\begin{document}
+\section{Propositional logic}
+These are the operators of \emph{classical propositional logic}:
+\begin{enumerate}
+\item
+$\land$ means ``and'' (e.g., $a \land b$ is ``a and b are both true'')
+\item
+$\lor$ means ``or'' ($a \lor b$ is ``either a or b is true'')
+\item
+$\neg$ means ``not'' ($\neg a$ is ``a is not true'')
+\item
+$p \implies q$ means ``if p, then q'', equivalently, ``either p is false or q is true'', equivalently $\neg p \lor q$
+\end{enumerate}
+
+Exercises:
+\begin{enumerate}
+\item
+Assume the sky is blue and the moon is made of rocks. Is the sentence ``if the sky is green, then the moon is made of blue cheese'' true or false?
+\item
+If $p \implies q$ is true, is $q \implies p$ (the \emph{converse}) always true?.
+\item
+If $p \implies q$ is true, is $\neg q \implies \neg p$ (the \emph{contrapositive}) always true?
+\item
+Express $a \lor b$ using only $\land$ and $\neg$. (This is called \emph{De Morgan's law}. It shows that $\land$ and $\neg$ are sufficient to express all of propositional logic.)
+\item
+The operator $\uparrow$ has these semantics: $a \uparrow b$ means ``either a is false or b is false''. Express all the other operators using $\uparrow$.
+\end{enumerate}
+
+\section{First-order logic}
+Read $\forall$ as ``for every'' and $\exists$ as ``there exists'.
+
+Example: let $H(x, y)$ denote ``x cuts y's hair''. Then we can write ``Everyone has someone who cuts their hair'' as:
+$$\forall x \exists y H(x, y)$$
+and ``there is someone who cuts everyone's hair'' as:
+$$\exists x \forall y H(x, y)$$
+
+Notice that $\exists x \phi(x)$ is equivalent to $\neg \forall x \neg \phi(x)$. (This relies on the assumption that at least one thing exists.)
+
+Exercises:
+\begin{enumerate}
+\item
+Which one of these sentences implies the other? Are they equivalent?
+\item
+Write the negations of both sentences.
+\item
+Write the definition of limit using logical symbols. Then write its negation.
+\end{enumerate}
+\end{document}
