@@ -32,7 +32,7 @@ These are the operators of \emph{classical propositional logic}:
 \item
 $\land$ means ``and'' (e.g., $a \land b$ is ``a and b are both true'')
 \item
-$\lor$ means ``or'' ($a \lor b$ is ``either a or b is true'')
+$\lor$ means ``or'' ($a \lor b$ is ``a or b is true'', i.e., ``at least one of a or b is true'')
 \item
 $\neg$ means ``not'' ($\neg a$ is ``a is not true'')
 \item
@@ -44,22 +44,22 @@ Exercises:
 \item
 Assume the sky is blue and the moon is made of rocks. Is the sentence ``if the sky is green, then the moon is made of blue cheese'' true or false?
 \item
-If $p \implies q$ is true, is $q \implies p$ (the \emph{converse}) always true?.
+If $p \implies q$ is true, is $q \implies p$ (the \emph{converse}) always true?
 \item
 If $p \implies q$ is true, is $\neg q \implies \neg p$ (the \emph{contrapositive}) always true?
 \item
 Express $a \lor b$ using only $\land$ and $\neg$. (This is called \emph{De Morgan's law}. It shows that $\land$ and $\neg$ are sufficient to express all of propositional logic.)
 \item
-The operator $\uparrow$ has these semantics: $a \uparrow b$ means ``either a is false or b is false''. Express all the other operators using $\uparrow$.
+The operator $\uparrow$ has these semantics: $a \uparrow b$ means ``either a is false or b is false''. Express all the other operators using $\uparrow$. (This operator is called \emph{NAND} or the \emph{Sheffer stroke}.)
 \end{enumerate}
 
 \section{First-order logic}
 Read $\forall$ as ``for every'' and $\exists$ as ``there exists'.
 
-Example: let $H(x, y)$ denote ``x cuts y's hair''. Then we can write ``Everyone has someone who cuts their hair'' as:
-$$\forall x \exists y H(x, y)$$
-and ``there is someone who cuts everyone's hair'' as:
+Example: let $H(x, y)$ denote ``x cuts y's hair''. Then we can write ``there is someone who cuts everyone's hair`` as:
 $$\exists x \forall y H(x, y)$$
+and ``everyone has someone who cuts their hair'' as:
+$$\forall x \exists y H(y, x)$$
 
 Notice that $\exists x \phi(x)$ is equivalent to $\neg \forall x \neg \phi(x)$. (This relies on the assumption that at least one thing exists.)
 
