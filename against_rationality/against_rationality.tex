@@ -2,6 +2,8 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{natbib}
+\usepackage{url}
 
 \setlength{\voffset}{-1 in}
 \addtolength{\textheight}{2.15 in}
@@ -22,33 +24,35 @@
 
 \renewcommand{\phi}{\varphi}
 
-\newtheorem{tractability}{Criterion}[section]
-\newtheorem{guidance}{Criterion}[section]
-
+\newtheorem{criterion}{Criterion}
+\newtheorem{conjecture}{Conjecture}
 \newtheorem{definition}{Definition}
-\newtheorem{claim}{Claim}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{theorem}{Theorem}
 
 \begin{document}
+\bibliographystyle{plainnat}
+
 \title{Against the Possibility of a Formal Account of Rationality}
 \author{Shivaram Lingamneni}
 \maketitle
-
 
 \begin{abstract}
 I analyze a recent exchange between Adam Elga and Julian Jonker concerning unsharp (or imprecise) credences and decision-making over them. Elga holds that unsharp credences are necessarily irrational; I agree with Jonker's reply that they can be rational as long as the agent switches to a nonlinear valuation. Through the lens of computational complexity theory, I then argue that even though nonlinear valuations can be rational, they come in general at the price of computational intractability, and that this problematizes their use in defining rationality. I conclude that the meaning of ``rationality'' may be philosophically vague.
 \end{abstract}
 
 \section{Introduction}
-Part of decision theory, at least in the philosophical sense, appears to be providing a formal account of rationality --- telling the hypothetical ``rational agent'' what to do. But it seems that such an account must avoid two traps. For one, it must separate ``rationality'' (achievable, ideally susceptible of rule-based description) from ``insight'' (difficult, presumably not so susceptible). It seems reasonable to expect that rationality requires the avoidance of Dutch Books, but not that it requires independently reinventing the theory of special relativity. Rationality seems to be defined as only a limited fragment of our cognitive potential; it does not coincide with our most general notions of ``human reason.''
+One task of decision theory (inasmuch as philosophers are interested in it) seems to be providing a formal account of rationality. Such an account should tell the hypothetical ``rational agent'' what to do; in contraposition, it should constrain his behavior such that any violation of the constraint may be considered ``irrational''. But it seems that such an account has to avoid two traps. For one, it must separate ``rationality'' (achievable, ideally susceptible of rule-based description) from ``insight'' (difficult, presumably not so susceptible). It seems reasonable to expect that rationality might require maximizing expected profit in a game of dice, but not that it might require independently reinventing the theory of special relativity. Rationality seems to be defined as only a limited fragment of our cognitive potential; it does not coincide with our most general notions of ``human reason.''
 
-Another potential trap is a ``no-theory'' account of rationality: ``just do the right thing.'' Certainly, yielding the best available action (at least within the context of some constrained space of problems) seems to be a necessary condition for any theory of rationality. However, simply stipulating that the agent take the best action seems at best a deeply unsatisfying account. For one, it fails to describe how the agent should go about achieving rationality. But furthermore, even in finite/discrete situations where brute force is applicable, it seems to leave the actual content of rationality unexplained.
+Another potential trap is a ``no-theory'' account of rationality: ``just do the right thing.'' Certainly, yielding the best available action (at least within the context of some constrained space of problems) seems to be a necessary condition for any theory of rationality. However, simply stipulating that the agent take the best action seems at best a deeply unsatisfying account. For one, it fails to describe how the agent should go about achieving rationality. But furthermore, even in finite or discrete situations where brute force is applicable, it seems to leave the actual content of rationality unexplained.
 
-Call these Pitfall 1 and Pitfall 2. Following a suggestion by Scott Aaronson that computational complexity theory has significant things to tell us about philosophy --- in particular, about issues of human cognition and logical omniscience --- I wish to reread a recent exchange between Adam Elga and Julian Jonker in complexity-theoretic terms.
+Call these Pitfall 1 and Pitfall 2. Following a suggestion by Scott Aaronson \citeyearpar{DBLP:journals/corr/abs-1108-1791} that computational complexity theory has significant things to tell us about philosophy --- in particular, about issues of human cognition and logical omniscience --- I wish to reread a recent exchange between Adam Elga and Julian Jonker in complexity-theoretic terms.\footnote{I am also following \cite{NOUS:NOUS479}, who applies the P/NP distinction to epistemology and the notion of epistemic virtue.}
 
 \section{Background}
-I will give an approximate reconstruction of the Elga-Jonker exchange; I must warn the reader that the reconstruction is neither complete nor fully accurate. In the case of Elga, I omit much of the argument, since my concerns differ somewhat from his. In the case of Jonker, I must emphasize that I am reconstructing only an intermediate version of his view --- one of his stepping stones, as it were --- that I agree with much more than I agree with his final conclusion.
+I will give an approximate reconstruction of the Elga-Jonker exchange; I must warn the reader that the reconstruction is neither complete nor fully accurate. In the case of Elga, I omit much of the argument, since my concerns differ somewhat from his. In the case of Jonker, I should emphasize that I am reconstructing only an intermediate version of his view --- one of his stepping stones, as it were --- that I agree with much more than I agree with his final conclusion.
 
-Elga argues as follows:
+Elga \citeyearpar{elga2010subjective} argues as follows:
 
 \begin{enumerate}
 \item
@@ -58,129 +62,227 @@ For this and for a wide class of propositions, it is (apparently) impossible to 
 \item
 Consider now the following situation (hereafter ``Good Book''). Given an unknown event X, you are offered two bets, A and B. Bet A costs \$10 and wins you \$25 if X is true. Bet B costs \$10 and wins you \$25 if X is false.
 \item
-A rational agent must buy at least one of the bets. A sharp agent maximizing expected utility will buy A if he has $P(X) \geq .4$, and B if he has $P(X) \leq .6$ (both if $P(X) \in [.4, .6]$). But any agent who buys both bets will make a sure profit of \$5, whether X comes true or not. (Elga calls this situation a "good book", but I will reverse the direction and say that the agent has been offered a Dutch Book, in the classical sense of the term.)
+A rational agent must buy at least one of the bets. A sharp agent maximizing expected utility will buy A if he has $P(X) \geq .4$, and B if he has $P(X) \leq .6$ (both if $P(X) \in [.4, .6]$). But any agent who buys both bets will make a sure profit of \$5, whether X comes true or not. (Elga calls situations of this type ``good books'', but I will reverse the direction and say that the agent has been offered a Dutch Book, in the classical sense of the term: a collection of bets that pay off under every possible outcome.)
 \item
-If an agent's credence in X is uncertain --- in particular if it may lie outside the interval $[.4, .6]$, the agent does not appear to be constrained to buy at least one of the bets. (Elga evaluates and rejects a number of candidate principles that could so constrain the agent.)
+If an agent's credence in X is sufficiently uncertain --- in this case, if it may be in $[0, .4)$ and may also be in $(.6, 1]$ --- the agent does not appear to be constrained to buy at least one of the bets. (Elga evaluates and rejects a number of candidate principles that could so constrain the agent.)
 \item
-Elga concludes that in fact, it is irrational to have unsharp credences, since the unsharp agent may fail to recognize and exploit Dutch Books.
+Elga concludes that in fact, it is irrational to have unsharp credences, since the unsharp agent is not constrained by her credences to take a rational action (recognizing and exploiting the Dutch Book).
 \end{enumerate}
 
-Elga does not resolve the apparent contradiction between the Jellyfish Bag and the Good Book; his conclusion appears to be that the rational agent must have a sharp, precise credence for the event of a toothbrush. Jonker replies (keeping in mind my previous caveats):
+Elga does not resolve the apparent contradiction between the Jellyfish Bag and the Good Book; his conclusion appears to be that the rational agent must have a sharp, precise credence for the event of a toothbrush. Jonker \citeyearpar{jonker2012} replies (keeping in mind my previous caveats):
 
 \begin{enumerate}
 \item
-Implicit throughout Elga's discussion is the assumption that bets be evaluated in a ``value-additive'' or ``linear'' way; if you value bet A at $v(A)$ and bet B at $v(B)$, linearity dictates that you value A and B together at $v(A) + v(B)$.
+Implicit throughout Elga's discussion is the assumption that bets be evaluated in a ``value-additive'' or ``linear'' way; if you value bet A at $v(A)$ and bet B at $v(B)$, linearity dictates that you value A and B together at $v(A) + v(B)$.\footnote{Elga explicitly restricts himself to agents whose utility is linear in money, but states in a footnote that this is only a notational convenience and his arguments generalize to any ``nontrivial utility scale''. In light of \cite{DBLP:journals/mp/Ahmed06}, I think one interpretation of Jonker's counterargument may be that this claim is false, and the Good Book scenario does not generalize to the risk-averse agent, whose utility in money is concave.}
 \item
-In practice, many situations seem to call for nonlinear valuations. In particular, a risk-averse agent can be sublinear. Faced with a small bet, he may value it positively and accept it. But faced with a million copies of the same bet, he may reject them negatively and reject them, because he is afraid to go bankrupt.
+In practice, many situations seem to call for nonlinear valuations. In particular, a risk-averse agent can be sublinear. Faced with a small bet, he may value it positively and accept it. But faced with a package containing a million copies of the same bet, he may value it negatively and reject it, because he is afraid to go bankrupt.
 \item
 Similarly, the utility of physical objects can be superlinear. For example, a car with an empty gas tank and a jerrycan of gas are worth more together than apart.
 \item
 A natural perspective on the unsharp agent in the ``Good Book'' scenario is that her valuations may be superlinear. Due to her uncertain credence in the event X, she may not consider either bet A or bet B worthwhile in isolation. But in that case, she should recognize that together they form a Dutch Book and buy them both.
 \item
-Model unsharp credences by credence intervals, e.g., $[.3, .7]$. The following rule accommodates both the sharp agent, who wishes to maximize expected value, and the unsharp agent with interval-valued preferences, who wishes to buy the Dutch Book: choose the action which maximizes (over all possible actions) the minimum expected utility (over all credence values in the interval).
+Model unsharp credences by credence intervals, e.g., $[.3, .7]$. The following rule accommodates both the sharp agent, who wishes to maximize expected value, and the unsharp agent with interval-valued preferences, who wishes to buy the Dutch Book: choose the action which maximizes (over all possible actions) the minimum expected utility (over all credence values in the interval). Call this rule ``maximin expected utility'', or MMEU.
 \end{enumerate}
 
-Jonker's ultimate rejection of MMEU is motivated by the simplistic nature of the interval-valued credence model, also by the way it seems to conflate unsharpness with risk aversion. Certainly, MMEU (as a maximin principle) does not seem to describe all possible rational responses to unsharpness. An optimistic agent with ``nothing to lose'' (perhaps identifiable with the risk-seeking agent) might prefer a maximax principle, choosing the bets with the greatest possibility of gain, no matter how unlikely that possibility is. In between these two, we have the possibility of collapsing the unsharp agent into a sharp, risk-neutral agent, whose first-order credences are the expected values of her second-order credence distribution. I do not wish to argue that the maximin response to unsharpness is the only response, or a universally applicable one. My discussion will depend only on these contentions:
+Jonker's ultimate rejection of MMEU is motivated by the simplistic nature of the interval-valued credence model, also by the way it seems to conflate unsharpness with risk aversion. Certainly, MMEU (as a maximin principle) does not seem to describe all possible rational responses to unsharpness. An optimistic agent with ``nothing to lose'' (perhaps identifiable with the risk-seeking agent) might prefer a maximax principle, choosing the bets with the greatest possibility of gain, no matter how unlikely that possibility is. In between these two, we have the possibility of collapsing the unsharp agent into a sharp, risk-neutral agent, whose first-order credences are precisely the expected values of her second-order credence distribution. I do not wish to argue that the maximin response to unsharpness is the only response, or a universally applicable one. My discussion will depend only on these contentions:
 
 \begin{enumerate}
 \item
 MMEU is a successful counterexample to Elga's claim that no decision principle constrains the unsharp agent to buy at least one bet from the Good Book. The maximization in MMEU is over four possibilities: buy neither, buy A, buy B, or buy both. The minimum expected utility from buying neither is \$0, and the minimum expected utility from buying both is \$5, so it is impossible for the agent to buy neither.
 \item
-In at least \emph{some} situations, MMEU is in fact the ideally rational response to unsharp beliefs. This is because it successfully models an attitude I will call ``absolute risk aversion'': the unwillingness to countenance any possible loss.
+In at least \emph{some} situations, MMEU is in fact the ideally rational response to unsharp beliefs. This depends on two subclaims:
+\begin{enumerate}
+\item
+MMEU successfully models the risk-averse response to unsharp credences, and in the extremal case, an attitude I will call ``absolute risk aversion'': the unwillingness to countenance any possible loss.
+\item
+There exist situations in which risk aversion (even absolute risk aversion) is the ideally rational response.
+\end{enumerate}
 \end{enumerate}
 
-The first of these is, I think, evident. The second is perhaps more controversial, but the rationality of risk aversion has been extensively discussed by philosophers and economists. I will offer just one scenario in which absolute risk aversion seems justified: bankruptcy. Imagine that an agent is offered a package of bets, the expected value of which is high, but which admits at least one possible outcome in which she loses all her money. Furthermore, she is confident that in the future, she will be offered a Good Book --- as long as he has the money to buy it in the first place. Alternately, imagine that the loss outcomes from the bets are very high, and that in the agent's society, the penalty for unpaid debt is to be sold into a lifetime of indentured servitude.
+Claim (1) is, I think, evident. For Claim (2a), see proposition~\ref{dutchBookLeqMMEU}, but the intuitive justification is simply that the MMEU-agent always considers the worst possible situation consistent with his beliefs.
 
-This suggests a computational rereading of Elga's argument. Elga has shown that for an unsharp agent, there exist Dutch Books such that every individual bet of them is not worthwhile in isolation. Thus, rationality requires the unsharp agent to have the ability to recognize Dutch Books; otherwise she risks missing out on sure gain. However, linear (or value-additive) decision principles such as expected utility maximization (hereafter EUM) are not powerful enough to recognize Dutch Books. The unsharp agent must replace EUM with something like MMEU.
+Claim (2b) is potentially more controversial, but the rationality of risk aversion has been extensively discussed by philosophers and economists. I will offer just one scenario in which absolute risk aversion seems justified: bankruptcy. Imagine that an agent is offered a package of bets, the expected value of which is high, but which admits at least one possible outcome in which she loses all her money. Furthermore, she is confident that in the future, she will be offered a stream of Good Books --- as long as she has the money to buy them in the first place. Alternately, imagine that in the agent's society, the penalty for bankruptcy is to be sold into a lifetime of indentured servitude.
 
-I am a frequentist, so the most basic objections to the MMEU picture that occur to me are methodological. Why should the unsharp agent be able to quantify the exact nature of her unsharpness? Saying that imprecise beliefs are described by precise intervals of credence (or precise second-order belief distributions) seems to be introducing a false precision --- and once we have abandoned the Ramseyan argument that precise credences can be elicited by measuring the agent's propensity to bet, it is unclear how we can measure these higher-order beliefs, no matter how we represent them. These objections lead rapidly into abstract concerns and touch on a longstanding controversy in the philosophy of probability, and I will not discuss them further here.
+This suggests a computational rereading of Elga's argument. Elga has shown that there exist Dutch Books such that for an unsharp agent, every individual bet of them is not worthwhile in isolation. Thus, rationality requires the unsharp agent to have the ability to recognize Dutch Books; otherwise she risks missing out on sure gain. However, linear (or value-additive) decision principles such as expected utility maximization (hereafter EUM) are not powerful enough to recognize Dutch Books. The unsharp agent must replace EUM with something like MMEU.
 
-A second basic objection, and one mentioned by Jonker, is that MMEU does not seem like the last word in decision principles. Expected utility maximization neatly avoided Pitfall 1; it gave a simple criterion for action. Now that we have accepted this more elaborate principle, is the door open for us to require more and more complex criteria for rationality? This is the objection I intend to pursue formally here. In order to do it, I will introduce some basic notions from computational complexity theory.
+I am a frequentist, so I am fully convinced of the necessity of unsharp credences. I consider them the natural and correct response to many cases when the reference class for an event (such as ``toothbrush'') is ambiguous or inadequate. (\cite{DBLP:journals/synthese/Hajek07} argues convincingly that Bayesianism does not provide easy answers in these cases either.) So it might seem that I am committed to MMEU or something like it as an account of decision-making over unsharp credences. But I think that frequentism should imply a thoroughgoing skepticism of quantitative accounts of knowledge, orthodox Bayesian or otherwise --- so I will try and dispute MMEU as well.
+
+The most basic objections to the MMEU picture that occur to me are methodological. Why should the unsharp agent be able to quantify the exact nature of her unsharpness? Saying that imprecise beliefs are described by precise intervals of credence (or precise second-order belief distributions) seems to be introducing a false precision --- and once we have abandoned the Ramseyan argument that precise credences can be elicited by measuring the agent's propensity to bet, it is unclear how we can measure these higher-order beliefs, no matter how we represent them. These objections lead rapidly into abstract concerns and touch on a longstanding controversy in the philosophy of probability, and I will not discuss them further here.
+
+A second basic objection, and one mentioned by Jonker, is that MMEU does not seem like the last word in decision principles. Expected utility maximization neatly avoided Pitfall 1; it gave a simple condition for action against betting books, namely evaluating each bet in isolation. Now that we have accepted this more elaborate principle, is the door open for us to require more and more complex criteria for rationality? This is the objection I intend to pursue formally here. In order to do it, I will introduce some notions from computational complexity theory.
 
 \section{Computational complexity and philosophy}
 Unlike recursion (or ``computability'') theory, in which the main objects of study are problems that cannot be solved by any computer, computational complexity theory studies the relative hardnesses of problems that computers can solve. Speaking very loosely, the problems we are ordinarily accustomed to solving with computers (arithmetical operations, sorting, shortest paths in maps, etc.), are in the complexity class P, meaning that they can be solved within a time that is polynomial in the size of the input.
 
-There is a natural class of prima facie harder problems, known as NP. Intuitively, problems in NP have the following form: they can be computed by an algorithm that ``guesses'' a solution from an exponential search space, then verifies it in polynomial time. The canonical problem of this type is SAT, or Boolean satisfiability: the question of whether a formula of propositional logic is true under some assignment of truth values to the atoms. Checking whether a particular assignment satisfies the formula is easy (i.e., polynomial-time), but given $n$ atoms, there are $2^n$ possible assignments overall --- thus, the brute-force solution to SAT requires time at least exponential in the size of the input. P is clearly contained in NP. Although it is strongly suspected that in fact P $\not =$ NP, this has not been proven; it is considered one of the major unsolved problems in contemporary mathematics. 
+There is a natural class of prima facie harder problems, known as NP. Intuitively, problems in NP have the following form: they can be computed by an algorithm that ``guesses'' a solution from an exponential search space, then verifies it in polynomial time. The canonical problem of this type is SAT, or Boolean satisfiability: the question of whether a formula of propositional logic is true under some assignment of truth values to the atoms. Checking whether a particular assignment satisfies the formula is easy (i.e., polynomial-time), but given $n$ atoms, there are $2^n$ possible assignments overall --- thus, the brute-force solution to SAT requires time at least exponential in the size of the input. P is clearly contained in NP. Although it is strongly suspected that in fact P $\not =$ NP, this has not been proven; it is considered one of the major unsolved problems in contemporary mathematics.
 
-(Introduce Karp and Cook reducibility; introduce NP-completeness and NP-hardness.)
+The ``hardest'' problems in NP are called \emph{NP-complete}. Their defining characteristic is that every problem in NP is reducible to them, so if any of them were discovered to be in P, it would imply P = NP. (Specifically, for any NP-complete problem Q, there is a polynomial-time many-one reduction, or Karp reduction, from any problem in NP to Q.) Problems outside NP may be \emph{NP-hard}, intuitively, at least as hard as NP-complete problems. (Formally, Q is NP-hard if there is a polynomial-time Turing reduction, or Cook reduction, from any problem in NP to Q.)
 
-The \emph{exponential time hypothesis} of Impagliazzo and Paturi is slightly stronger than P $\not = NP$. It states that SAT and 3SAT (and some related NP-complete problems) cannot be solved faster than time proportional to $2^n$ --- metaphorically, that for these problems, it is not possible to improve on brute-force search. As with P $\not =$ NP, the ETH is unproven but widely believed. Recent work by Williams bolsters its plausibility by relating it to other widely believed conjectures.
+SAT is NP-complete. It has subproblems called $k$-SAT that are also NP-complete:
+\begin{theorem}
+\label{kSat}
+A \emph{literal} is a propositional formula of the form $a$ or $\neg a$, i.e., a positive or negated atom. Let a \emph{$k$-ary disjunction} be a disjunction of $k$ literals; likewise for \emph{$k$-ary conjunctions}. For $k \geq 3$, the problem $k$-SAT of determining the satisfiability of conjunctions of $k$-ary disjunctions is NP-complete.
+\end{theorem}
 
-I will idiosyncratically refer to the problem of deciding whether a propositional formula is a tautology as VAL (for ``validity''). The specific form of VAL where the formulae are 3-ary conjunctions of positive or negated atoms (by analogy with 3SAT) will be called 3VAL. Under the exponential time hypothesis, VAL and 3VAL require at least exponential time (since they are straightforwardly Cook-equivalent to SAT and 3SAT, respectively).
+\subsection{The exponential time hypothesis}
+The \emph{exponential time hypothesis} (hereafter ``ETH'') of \cite{DBLP:journals/jcss/ImpagliazzoP01} is slightly stronger than P $\not =$ NP. It has various forms, but in general it says that the hardest NP-complete problems cannot be solved in subexponential time, i.e., $2^{o(n)}$. For example, $O(2^{\sqrt{n}})$ is considered subexponential under this definition, but $O((\sqrt{2})^n) = O(2^{0.5n}) \in 2^{O(n)}$ is not, even though both are asymptotically faster than $O(2^n)$. As with P $\not =$ NP, the ETH is unproven but widely believed.
+
+\begin{conjecture}[Exponential time hypothesis]
+For each $k$, let $s_k$ be the infimum (greatest lower bound) of the set of reals $\{\delta \mid \text{k-SAT is solvable in } O(2^{kn})\}$. For $k \geq 3$, $s_k > 0$.
+\end{conjecture}
+
+We have known upper bounds on $s_3$, the best due to \cite{DBLP:journals/corr/abs-1008-4067}:
+
+\begin{theorem}
+\label{3SatBound}
+3-SAT is solvable in $O((\frac{4}{3} + \epsilon)^{n}) \approx O(2^{0.416n})$, for arbitrarily small $\epsilon > 0$. Consequently, $s_3 \leq 0.416$.
+\end{theorem}
+
+So there are solutions to 3-SAT that asymptotically outperform brute force, despite still being exponential.\footnote{In passing, although the ETH only talks about deterministic algorithms, the best known randomized algorithms for $k$-SAT are also exponential.} But in the general case, we have another conjecture by the same authors:
+
+\begin{conjecture}[Strong ETH]
+$\lim_{k \to \infty} s_k = 1$.
+\end{conjecture}
+
+The Strong ETH says that  says that for larger and larger values of $k$, the optimal solution of $k$-SAT regresses progressively to the brute-force $O(2^n)$ solution that tests all possible assignments. Moreover, \cite{Williams:2010:IES:1806689.1806723} proves the following theorem:
+
+\begin{theorem}
+Suppose there is a superpolynomial function $s(n)$ such that SAT for Boolean circuits with $n$ variables and $n^k$ gates can be solved in $2^n \cdot \text{poly}(n^k)/s(n)$ time, for all $k$. Then $\text{NEXP} \not \subseteq P/\text{poly}$.
+\end{theorem}
+
+Since the consequent of this implication is believed to be false, so is the antecedent; the nonexistence of such an $s(n)$ would imply that we cannot improve on $O(2^n)$ brute-force search for SAT.
+
+I will idiosyncratically refer to the problem of deciding whether a propositional formula is a tautology as VAL (for ``validity''). The specific form of VAL where the formulae are 3-ary conjunctions of positive or negated atoms (by analogy with 3SAT) will be called 3VAL. VAL and 3VAL are unlikely to be in NP (they naturally fall in co-NP instead), but since they are the complement problems of SAT and 3SAT, they are as hard:
+
+\begin{proposition}
+\label{3ValExpTime}
+VAL and 3VAL are NP-hard, and exponential lower bounds on SAT and 3SAT (respectively) apply to them as well, i.e., under the exponential time hypothesis, they require exponential time.
+\end{proposition}
+Proof. Assume a subexponential algorithm for 3VAL. Take an instance of 3SAT of the form:
+$$(a \lor b \lor \neg c) \land (\neg b \lor d \lor e) \ldots$$
+and compute its negation:
+$$(\neg a \land \neg b \land c) \lor (b \land \neg d \land \neg e) \ldots$$
+Apply the algorithm for 3VAL, then invert the answer (a formula is satisfiable iff its negation is not a validity). The transformation is polynomial-time, so this is a Cook reduction from 3SAT to 3VAL. Moreover, the transformed formula has the same number of variables and clauses as the original, and we invoked the oracle exactly once, so we have a subexponential algorithm for 3SAT, which contradicts the ETH.
+
+The proof for SAT and VAL is similar. $\square$
 
 \subsection{The tractability criterion}
 Complexity theory gives a natural (partial) formalization of Pitfall 1. Rational agents have limits on their computational power; they cannot be expected to perform arbitrarily difficult optimizations. So it seems natural to propose the following \emph{tractability criterion}:
 
-\begin{tractability}
-Assume $\text{P} \not = \text{NP}$. Any decision principle proposed as a constraint on rational agents must have a polynomial-time algorithm.
-\end{tractability}
+\begin{criterion}
+\label{tractability}
+Assume $\text{P} \not = \text{NP}$. Any decision principle proposed as a constraint on rational agents must have an algorithm in $P$.
+\end{criterion}
 
 I hold this condition to be necessary, but not sufficient --- but I will postpone discussion of the converse principle until my conclusion.
 
 How much you believe the tractability criterion will depend on how much you believe logical omniscience is a problem for Bayesianism. Personally, I believe that it is a very serious problem, and that it has not been adequately addressed. But a Bayesian might contend that computationally intractable decision principles still usefully describe \emph{idealized} Bayesian decision-making --- even if this ideal is radically unattainable. Against such a position, I offer a different counterargument, one related to the second pitfall. 
 
 \subsection{The guidance criterion}
-I hold that the exponential time hypothesis almost precisely captures the intent behind Pitfall 2. If it is true, then there are search problems for which no help is possible; every successful algorithm is (modulo constant-factor speedups) a brute-force search in disguise. So this motivates my proposed \emph{guidance criterion}:
+I hold that the exponential time hypothesis almost precisely captures the intent behind Pitfall 2. If it is true, then there are search problems for which no help is possible; every successful algorithm is, in the worst case and modulo constant-factor speedups, a brute-force search in disguise. Intuitively, a brute-force search has no philosophical content; it does not tell us anything about the problem it solves. So this motivates my proposed \emph{guidance criterion}:
 
-\begin{guidance}
-Assume the exponential time hypothesis. A decision principle that requires the agent to solve NP-hard problems is \emph{content-deficient}, because it requires the agent to try every alternative and pick the best one --- it offers no \emph{guidance}.
-\end{guidance}
+\begin{criterion}
+\label{guidance}
+Assume the exponential time hypothesis. A decision principle that requires the agent to solve SAT or 3SAT is \emph{content-deficient}, because it requires a brute-force search in the worst case --- it offers the agent no meaningful \emph{guidance}.
+\end{criterion}
+
+Aaronson notes that since most complexity theory focuses on worst-case analysis, applications of it to philosophy are subject to a general objection: perhaps the worst case is not philosophically relevant, and what really matters is the average or typical case? In practice, many heuristic algorithms for SAT (``SAT solvers'') have sophisticated \emph{algorithmic} content and substantially outperform brute force on typical real-world inputs. I am not saying that these algorithms are trivial, but rather that they cannot rescue a decision principle reliant on them from content-deficiency.
+
+Why should a \emph{worst-case} regression to brute force mean that a decision principle lacks content? I have two arguments, one I think is good and one I think is middling:
+
+\begin{enumerate}
+\item
+A key function of rational decision principles is to prevent you from being exploited by malicious agents. (This is, in fact, the standard Dutch Book argument for belief in the probability axioms --- if you violate them, someone can construct a Dutch Book against you.) But if you rely on an imperfect heuristic, the malicious agent can theoretically feed you exactly the problem instances that break it.\footnote{This phenomenon is observed in practice. An algorithm with a high worst-case running time is a potential security vulnerability for a network service such as a website, because sending it the pathological inputs can result in a denial-of-service attack. For a recent instance ``in the wild'', see \url{http://bugs.python.org/issue13703}.} Regressing to brute-force in the face of a malicious adversary is, with respect to this requirement, as bad as regressing all the time.
+\item
+Consider someone who believes a SAT-solving decision principle is content-deficient over the worst-case problem instances, but not in general. This person owes us an explanation of where the principle succeeds and fails. Saying that the principle only has meaning over some unspecified subset of the problem space is an unacceptable retreat from the original notion of decision principle.
+\end{enumerate}
+
+Another important qualification is that, as mentioned above, 3SAT can be solved deterministically in $O(c^n)$ for $c < 2$, which is an asymptotic improvement over the brute-force $O(2^n)$. But I do not think this can be construed as offering a sufficient level of guidance. Notice that $O(c^n)$ is $O(2^{\ln c \cdot n})$ --- so the running time is equivalent to ``shrinking'' the problem by a constant factor of $\ln c$, then performing a brute-force search on the remaining space. Given a constant $d < 1$, $2^{O(dn)}$ does not seem qualitatively less brute-force than $O(2^n)$, for the same reasons that we generally neglect constant factors when doing asymptotic analysis. In any case, under the Strong ETH, SAT and $k$-SAT for arbitrary $k$ are necessarily brute-force in the original sense.
 
 \section{Technical results}
-A disclaimer: every result in this section is more or less trivial. The least trivial result, hardness of DUTCHBOOK, is proved in greater generality by Paris in the context of verifying the consistency of probabilistic beliefs. I include proofs so that the technical material can be compared at every step with the underlying intuitions that motivate the hypotheses, in hopes of justifying that the results are founded on essential aspects of the problems, rather than accidents of the mathematical formalism.
+A disclaimer: every result in this section is more or less trivial. The least trivial result, hardness of DUTCHBOOK, has been proved already in greater generality (see \cite{paris1994uncertain}). I include proofs so that the arguments can be compared at every step with the intuitions motivating the hypotheses, in hope of showing that the results are founded on essential aspects of the problem, rather than accidents of the mathematical formalism.
 
 The natural generalization of Elga's Good Book scenario is the problem of betting on books of propositional formulae. In the case we are interested in, these propositional formulae consist of Boolean combinations of atomic events, for some set of $n$ atoms. Furthermore, we will require that the agent regard all $2^n$ possible combinations of these atomic events as logically possible --- equivalently, that the agent is not aware of any logical implications among the events. If such a thing seems outlandish, consider the atoms $\{f_i \mid 1 \leq i \leq 31\}$, where $f_i$ denotes the event that I will eat falafel for lunch on the $i$th day of January. The $f_i$ may not probabilistically independent, but they certainly seem to be logically independent. There really are $2^{31} = 2147483648$ distinct possibilities for my lunches.
 
 %For the sake of simplicity, throughout the technical discussion, we will take a ``bet'' on a formula $\phi$ to be a promise to pay \$1 if $\phi$ comes true. The price of a bet on $\phi$ will then correspond to the agent's personal probability for $\phi$. Later, when discussing risk aversion, we'll consider more expensive bets, but all the proofs should translate seamlessly to the new setting.
 
-The concept of Dutch Book is also in need of some formal clarification. Ian Hacking points out that in cases where the bookie knows more facts than the bettor, the result may be a trivial Dutch Book. For example, when the bettor pays \$0.5 for a \$1 bet that the quarter will land tails, but unbeknownst to him the bookie has provided a two-headed quarter, the bettor has been Dutch Booked in the sense that he loses money under every possible outcome. I think this is not properly in the spirit of the original definition of Dutch Book. The relevant quantification is over all outcomes the bettor perceives as logically possible --- and this includes the excluded possibility of tails. It may also include events to which the agent assigns probability zero --- for example, if we model the heights of men with a real-valued normal distribution, we consider it logically possible for a man to be exactly six feet tall, even though we assign this event a probability of 0. For this reason, I will define a Dutch Book as one that pays off over every outcome in the agent's state space, whether or not the agent assigns the outcome nonzero probability.
+The concept of Dutch Book is also in need of some formal clarification. \cite{hacking1967} points out that in cases where the bookie knows more facts than the bettor, the result may be a trivial Dutch Book. For example, when the bettor pays \$0.5 for a \$1 bet that the quarter will land tails, but unbeknownst to him the bookie has provided a two-headed quarter, the bettor has been Dutch Booked in the sense that he loses money under every possible outcome. I think this is not properly in the spirit of the original definition of Dutch Book. The relevant quantification is over all outcomes the bettor perceives as logically possible --- and this includes the excluded possibility of tails. It seems that it should also include events to which the agent assigns probability $0$ --- for example, if we model the heights of men with a real-valued normal distribution, we consider it logically possible for a man to be exactly six feet tall, even though this occurs with zero probability. For this reason, I will define a Dutch Book as one that pays off over every outcome in the agent's state space, whether or not the agent assigns the outcome nonzero probability.
 
-Definition. A decision principle for betting books is a recursive function that takes in a book of propositional bets $B$ and a representation $C$ of the agent's credences, then outputs what bets the agent should buy. (EUM and MMEU are decision principles in this sense.)
+\begin{definition}
+\label{decisionPrinciple}
+A \emph{decision principle} for betting books is an algorithm that takes in a book of propositional bets $B$ and a representation $C$ of the agent's credences, then outputs what bets the agent should buy. (EUM and MMEU are decision principles in this sense.)
+\end{definition}
 
-Definition. Let DUTCHBOOK be the following decision problem. Given a book of propositional bets over $n$ atoms, does there exist a package of bets that yield a profit under all $2^n$ outcomes?
+\begin{definition}
+\label{dutchBook}
+Let \emph{DUTCHBOOK} be the following decision problem. Given a book of propositional bets over $n$ atoms, does there exist a package of bets that yield a profit under all $2^n$ outcomes?
+\end{definition}
 
-Claim: DUTCHBOOK is Karp-reducible to MMEU over the class of all propositional books. (In other words, MMEU is harder than DUTCHBOOK, or ``contains'' it.)
+\begin{proposition}
+\label{dutchBookLeqMMEU}
+DUTCHBOOK is Karp-reducible to MMEU over the class of all propositional books. (In other words, MMEU is harder than DUTCHBOOK, or ``contains'' it.)
+\end{proposition}
 
 Proof. Given a book of bets we intend to test for Dutchness, we construct an agent whose degree of belief in every atom is uncertain between $0$ and $1$, inclusive. We apply MMEU to this agent; the agent will buy a package of bets if and only if they are a Dutch book. (Intuitively, the agent who is completely unsure of every proposition can only justify betting when victory is assured, no matter the outcome.)
 
-If we wish to avoid applying MMEU to agents with extremal beliefs (personal probabilities of $0$ and $1$), we can simply substitute beliefs that are sufficiently close to $0$ and $1$. I omit a detailed proof, but it should suffice to replace $0$ with an $o$ satisfying
-$$0 < o < \frac{1}{\sum_i w_i} (\min_{i\not = j} |w_i - w_j|)$$
-where the $w_i$ are the payoffs of the various bets. Replace $1$ with $1 - o$; both of these are clearly computable in polynomial time. $\square$
+If we wish to avoid applying MMEU to agents with extremal beliefs (personal probabilities of $0$ and $1$), we can simply substitute beliefs that are sufficiently close to $0$ and $1$. I omit a detailed proof, but it should suffice to replace $0$ with an $\epsilon$ satisfying
+$$0 < \epsilon < \frac{1}{\sum_i w_i} \cdot \frac{1}{\gcd(w_1, w_2, \ldots w_n)}$$
+where the $w_i$ are the payoffs of the various bets. Replace $1$ with $1 - \epsilon$; both of these are clearly computable in polynomial time. $\square$
 
-Claim: DUTCHBOOK is Karp-reducible to any principle that computes an optimal decision for a completely risk-averse agent.
+\begin{proposition}
+\label{dutchBookLeqRiskAversion}
+DUTCHBOOK is Karp-reducible to any principle that computes an optimal decision for a completely risk-averse agent.
+\end{proposition}
 
 Proof. As above. The risk-averse agent can only buy Dutch books. (As we mentioned previously, the fact that the risk-averse agent assigns probability 0 to an outcome does not exclude it from the definition of Dutch Book.) $\square$
 
-Claim. DUTCHBOOK over the class of books consisting of bets on atoms or negated atoms is in P.
+\begin{proposition}
+\label{dutchBookAtomsP}
+DUTCHBOOK over the class of books consisting of bets on atoms or negated atoms is in P.
+\end{proposition}
 
-Proof. The book consists entirely of prices on bets on $A$ and $\neg A$, for various logically independent atomic propositions A. Sort the bets by which proposition they describe. If the book gives two distinct prices for some A, there is a Dutch Book (sell the bet at the higher price and buy at the lower); if it prices $\neg A$ at something other than 1 - Price($A$), there is a Dutch Book (either buy both bets or sell both bets). If neither of these is true for any $A$, the bookie's beliefs are Kolmogorov consistent and there is no Dutch Book against him. $\square$
+Proof. The book consists entirely of prices on bets on $A$ and $\neg A$, for various logically independent atomic propositions $A$. Sort the bets by which proposition they describe. If the book gives two distinct prices for some $A$, there is a Dutch Book (sell the bet at the higher price and buy at the lower); if it prices $\neg A$ at something other than 1 - Price($A$), there is a Dutch Book (either buy both bets or sell both bets). If neither of these is true for any $A$, the bookie's beliefs are Kolmogorov consistent and there is no Dutch Book against him. $\square$
 
-Elga's original example falls into this class of books. But if we generalize to arbitrary propositions, the problem becomes harder --- the definition of Dutch Book quantifies over all $2^n$ possible outcomes, and we can harness the difficulty of the problem to perform difficult computations.
+Elga's original example falls into this class of books. But if we generalize to arbitrary propositions, the problem becomes harder --- the definition of Dutch Book quantifies over all $2^n$ possible outcomes, and we can harness this quantification to solve hard problems.
 
-Claim. DUTCHBOOK over the class of books consisting of arbitrary propositions is NP-hard.
+\begin{proposition}
+\label{dutchBookNPHard}
+DUTCHBOOK over the class of books consisting of arbitrary propositions is NP-hard. Furthermore, under the Exponential Time Hypothesis, it requires at least exponential time.
+\end{proposition}
 
-Proof. Fix a propositional formula $\phi$. Apply DUTCHBOOK to the book consisting of a single bet on $\phi$, priced at \$0.5. This book is Dutch if and only if $\phi$ is a propositional validity (or tautology); this is a Karp reduction of VAL to DUTCHBOOK. $\square$
+Proof. Fix a propositional formula $\phi$. Apply DUTCHBOOK to the book consisting of a single bet on $\phi$, priced at \$0.5 and paying \$1. This book is Dutch if and only if $\phi$ is a propositional validity; this is a Karp reduction of VAL to DUTCHBOOK. $\square$
 
 This seems somewhat cheap. Naturally, if we confront our agent with an arbitrarily complex propositional formula, we might expect bewilderment. In particular, it is not clear that the expected-utility-maximizer can do better on this problem. But consider what happens when we replace VAL with 3VAL.
 
-Definition: Call a book of bets on propositions of the form  $(A \land B \land \neg C)$, i.e., conjunctions of three atoms or negated atoms, a 3-Book.
+\begin{definition}
+\label{3Book}
+Let the \emph{3-Books} be the class of propositional books where every proposition is a 3-ary conjunction, i.e., of the form $(p_1 \land \neg p_2 \land p_3)$.
+\end{definition}
 
-Claim: DUTCHBOOK over the class of 3-Books is NP-hard. Furthermore, under the Exponential Time Hypothesis, it requires at least exponential time.
+\begin{proposition}
+\label{dutch3BookNPHard}
+DUTCHBOOK over the class of 3-Books is NP-hard. Furthermore, under the ETH, it requires at least exponential time.
+\end{proposition}
 
 Proof. Fix an instance of 3VAL, i.e., a formula $\phi$ that is the disjunction of $n$ clauses of the abovementioned form. Construct the following book: for each clause, offer a bet, priced at $\$1$, that pays $\$(n+1)$ if the clause comes true.
 
-This book is Dutch if and only if $\phi$ is a validity. If $\phi$ is a validity, then under every possible outcome, $\phi$ must be true, so at least one of its disjuncts must be true, so buying every bet costs $\$n$ and pays at least $\$n+1$, for a sure gain of at least $\$1$. Conversely, if $\phi$ is not a validity, then under the propositional valuation that makes it false, no bet pays off and every package loses money.
-
-It follows that the construction is a Karp reduction of 3VAL to DUTCHBOOK. But 3VAL is Cook-equivalent to 3SAT, which is NP-complete. $\square$
+This book is Dutch if and only if $\phi$ is a validity. If $\phi$ is a validity, then under every possible outcome, $\phi$ must be true, so at least one of its disjuncts must be true, so buying every bet costs $\$n$ and pays at least $\$(n+1)$, for a sure gain of at least $\$1$. Conversely, if $\phi$ is not a validity, then under the truth assignment that makes it false, no bet pays off and every package loses money. This is a Karp reduction of 3VAL to DUTCHBOOK. $\square$
 
 Now we can see the computational advantage of sharpness:
 
-Claim: The sharp Bayesian agent with an oracle for personal probabilities can evaluate 3-Books in polynomial time. Performing this evaluation requires only polynomially many beliefs.
+\begin{proposition}
+\label{sharpEUMP}
+The sharp, risk-neutral Bayesian agent with an oracle for personal probabilities can evaluate 3-Books in polynomial time. Performing this evaluation requires only polynomially many beliefs.
+\end{proposition}
 
 Proof. The agent examines every bet in isolation, computes its expected payoff against her personal probability, and accepts the bet iff the payoff is positive. This is linear time, or $O(n)$. The number of 3-ary propositions she can be asked to bet on is bounded above by $\binom{2n}{3}$, which is $O(n^3)$. $\square$
 
+The assumption of an oracle coincides with the intuition that a Bayesian agent has roughly direct access to her level of credence in simple propositions. For a specific example, consider the agent who assumes conditional independence of all the atoms, then applies the principle of indifference to each one. Her credence in each 3-ary proposition is then $(\frac{1}{2})^3 = \frac{1}{8}$. Less trivially, the agent could model the propositions as a Markov chain or a polytree Bayesian network, both of which  admit polynomial-time algorithms for computing the probabilities of conjunctions. However, the assumption is not entirely unproblematic. I discuss potential failures later.
+
+Parenthetically, the relationship between risk aversion and NP-hardness is discussed in the economic literature. In particular, \cite{DBLP:journals/mp/Ahmed06} proves the NP-hardness of a certain kind of stochastic optimization that accounts for risk, and \cite{DBLP:journals/mor/BertsimasDNT10} prove the NP-hardness of a minimax criterion for risk aversion. I am unclear on exactly how their results relate to mine --- but I wouldn't be surprised if everything in this section is an elementary corollary of their work.
+
 \section{The dilemma}
-Assume either that it can be rational to have unsharp credences, or that it can be rational to be maximally risk-averse. Assume P $\not =$ NP and the Exponential Time Hypothesis. Let DEC be a proposed decision principle for the evaluation of bets, such as expected-utility-maximization or MMEU. I argue that DEC must be caught on one horn or the other of the following dilemma:
+Assume either that it can be rational to have unsharp credences, or that absolute risk aversion can be rational. Assume P $\not =$ NP and the Exponential Time Hypothesis, and let DEC be a proposed decision principle in the sense of definition~\ref{decisionPrinciple}. I argue that DEC must be caught on one horn or the other of the following dilemma:
 
 \begin{enumerate}
 \item
@@ -189,7 +291,7 @@ DEC runs in polynomial time.
 \item
 In general, DEC is not powerful enough to identify Dutch Books.
 \item
-Specifically, consider the following class of decision problems: 3-Books with $n$ clauses, viewed by either by a maximally risk-averse agent or an unsharp agent whose uncertainty about each atom is $[p, 1-p]$ for $p < \frac{1}{n+1}$. There must exist instances of this class where DEC does not yield the optimal action (buying the book if and only if the clauses form a validity).
+Specifically, consider the following class of decision problems: 3-Books with $n$ clauses, viewed by either by a absolutely risk-averse agent or an unsharp agent whose credence interval for each atom is $[p, 1-p]$ for $p < \frac{1}{n+1}$. There must exist instances of this class where DEC does not yield the optimal action (buying the book if and only if the clauses form a validity).
 \item
 A generalization of Elga's argument applies to DEC: DEC is an inadequate condition on rationality, because it does not constrain unsharp and risk-averse agents to take a rational action (exploiting a Dutch Book).
 \end{enumerate}
@@ -199,15 +301,15 @@ DEC is powerful enough to identify Dutch Books.
 \item
 DEC must (in general) run in exponential time.
 \item
-DEC has fallen victim to Pitfall 1: it is computationally intractable and therefore represents an unachievable standard of rationality.
+DEC has fallen into Pitfall 1: it is computationally intractable and therefore represents an unachievable standard of rationality.
 \item
-DEC has fallen victim to Pitfall 2: since it instructs the agent to perform an exponential-time brute-force search, it is content-deficient.
+DEC has fallen into to Pitfall 2: since it instructs the agent to perform an exponential-time brute-force search, it is content-deficient.
 \end{enumerate}
 \end{enumerate}
 
 EUM is gored by the first horn, and MMEU by the second --- and there is no happy medium between them.
 
-Note that in order to generalize (``scale'', perhaps) the problem to larger books, we required the existence of agents with increasingly wide unsharp belief intervals: if the agent's interval does not go below $\frac{1}{n+1}$, then she can justify buying the bets in the 3-Book based on their expected utility alone. This is a problem, but not, I think, a serious one. For one, these thresholds are shrinking only reciprocally, while the time complexity of the 3-Books is increasing exponentially; it's easy to imagine someone whose dubiety extends from 1\% to 99\%, but $2^{100}$ is already astronomically large.
+Note that in order to generalize (``scale'', perhaps) the problem to larger books, we required the existence of agents with increasingly wide unsharp belief intervals: if the agent's interval does not go below $\frac{1}{n+1}$, then she can justify buying the bets in the 3-Book based on their expected utility alone. This is a problem, but not, I think, a serious one. In particular, these thresholds are shrinking only reciprocally, while the time complexity of the 3-Books is increasing exponentially; it's easy to imagine someone whose dubiety extends from 1\% to 99\%, but $2^{100}$ is already astronomically large.\footnote{Actually, given the enhanced running time for 3SAT in Theorem \ref{3SatBound}, we should multiply by $c < .416$ and use, e.g., the agent with credence interval $[.4\%, 99.6\%]$. But as discussed before, this is only a constant-factor change.}
 
 What is the proper interpretation of this dilemma? Someone convinced of the necessity of sharp credences (Elga's position) might read it as another reductio ad absurdum for unsharp ones. Someone convinced of the rationality of unsharp credences might take it as a reductio for Elga's argument. Someone else might attack the role of the combinatorial formalism in the argument. Personally, I endorse both unsharp credences and the original form of Elga's argument; I will instead deny the universal applicability of the tractability and guidance criteria, and moreover of any \emph{particular} principle of rationality. But I will not deny the relevance of computational concerns to rationality; I think their relevance extends well beyond the betting situations discussed so far.
 
@@ -219,13 +321,13 @@ What is the proper interpretation of this dilemma? Someone convinced of the nece
 
 \section{Two more attacks}
 \subsection{Combinatorial optimization as a fact of life}
-NP-hard problems have a way of intruding into situations where one might not expect them. Robert (292) shows that they can arise naturally in Bayesian statistics, when estimating hyperparameters. But they abound in real-life situations as well. For example, the well-known Travelling Salesman Problem models the situation faced by a person who wishes to plan a trip that will visit $n$ cities exactly once, finally returning to his starting place. Finding the minimal such tour turns out to be NP-complete.
+NP-hard problems have a way of intruding into situations where one might not expect them. \citet{robert2007choice} shows that they can arise naturally in Bayesian statistics, when estimating hyperparameters. But they abound in real-life situations as well. For example, the well-known Travelling Salesman Problem models the situation faced by a person who wishes to plan a trip that will visit $n$ cities exactly once, finally returning to his starting place. Finding the minimal such tour turns out to be NP-complete.
 
-There is a slippery slope here. Let's say the the agent is an actual traveling salesman, and real money is riding on how fast he can cover his route. Does rationality require him to solve the TSP? It seems fairly clear that the answer is ``no'', because picking a suboptimal tour and getting back to work is preferable to waiting indefinitely for the optimal solution. In practice, he can try a fast-in-practice heuristic technique such as branch-and-bound; if it doesn't finish and further delay would lose him business, he can switch to a polynomial-time approximation algorithm like Lin-Kernighan or Christofides. But does rationality entail knowing these algorithms as well?
+There is a slippery slope here. Let's say the the agent is an actual traveling salesman, and real money is riding on how fast he can cover his cities. We can adapt our notion of decision-theoretic rationality to the specific, constrained problem he faces: choosing an route. It seems that rationality should constrain him to avoid certain pathological routes (for example, the tour that always visits the most distant unvisited city, which will be suboptimal on nontrivial inputs). But does rationality also constrain him to find the optimal solution? It seems fairly clear that the answer is ``no'', because picking a suboptimal tour and getting back to work is preferable to waiting indefinitely for the optimal solution. In practice, he can try a fast-in-practice heuristic technique such as branch-and-bound; if it doesn't finish and further delay would lose him business, he can switch to a polynomial-time approximation algorithm like Lin-Kernighan or Christofides. But does rationality entail knowing these algorithms as well? That seems absurd. There is nothing particularly natural, obvious, or universal about them.
 
-Some natural NP-hard problems (for example, set cover, which plausibly abstracts a situation that arises in personnel hiring) are hard to approximate accurately at all.
+It is important to note that although an exact polynomial algorithm for one NP-complete problem would yield exact polynomial algorithms for all of them, the same is not true for approximation algorithms; guarantees such as ``yielding the optimum result to within a constant factor'' are not in general preserved by polynomial-time reductions. For example, the NP-complete problem of set cover (which plausibly abstracts a situation that arises in personnel hiring) is believed to be inapproximable to within a logarithmic factor. So even within the class of NP-complete problems, it does not suffice to teach the rational agent a single approximation technique --- messy domain-specific knowledge seems to be required. If a decision-theoretic notion of rationality applies here, it is a Balkanized one.
 
-Herbert Simon's idea of the satisficing agent is an attempt to account for the cost of decision-making. But to the best of my knowledge, the theory remains at the level of psychology; it has not been made precise.
+The idea that being rational involves weighing the cost of decision-making is not new. Notably, the economist Herbert Simon proposed the idea of a satisficing agent, who seeks an optimal solution but will settle for an available approximation as long as it meets her standards. But to the best of my knowledge, there is no theoretical framework that makes this notion precise in a natural way.
 
 \subsection{Search problems and creativity}
 The car-and-gas problem, suggested by Jonker, is an example of real-life nonlinearity. Let's say you want to go to the beach. A car with an empty gas tank and a jerrycan of gas, taken separately, are unhelpful. But combine them (appropriately) and all is well.
@@ -235,28 +337,82 @@ I think this scenario is like Elga's Good Book: it only looks tractable because 
 \item
 A rational agent should realize that neither the empty car nor the gas can get to the beach in isolation.
 \item
-A rational agent should realize that the car and the gas can be combined and driven to the beach; equivalently, an agent who does not realize this has violated rationality.
+A rational agent should realize that the car and the gas can be combined and driven to the beach.
+\item
+In contraposition: an agent who does not realize this has violated rationality.
 \end{enumerate}
 
-What happens if we generalize this problem to $n$ objects? It seems that now we require the agent to be aware of $2^n$ different possible relationships among the proffered objects. Is the rational agent necessarily someone of limitless ingenuity, seeing all the possible uses for the objects around him?
+What happens if we generalize this problem to $n$ objects? The agent's problem is now to identify useful subsets of the objects, and there are $2^n$ such subsets. I now have $2^n$ opportunities to claim that the agent is irrational! But more to the point, it seems that now the agent is no longer simply \emph{scanning} the available items, but \emph{searching} for the right combination of items. The fact that (for example) the magnifying glass can be used to ignite the phone book and boil the soup must \emph{occur} to him.
 
-I wish to emphasize that this version does not have a natural formalization as an NP-hard problem; specifically, it is difficult to imagine a presentation of the problem that does not give all weights for subsets of the items up front, at which point picking an optimal member is trivially $O(n)$.\footnote{A related problem, of picking the best allocation of items to groups, is maximal matching for hypergraphs, which I believe is NP-complete.}
+Is the rational agent necessarily someone of limitless ingenuity, seeing all the possible uses for the objects around him? Once we retreated from a linear (or ``local'') notion of utility, focused on the independent usefulness of each item, and moved to a nonlinear model focused on the interactions between items, we opened a Pandora's Box of possibilities for recognizing utility --- much like the wealth of possibilities we confront with real objects in real situations.
 
-But metaphorically, I think this example hints at Scott Aaronson's idea about the relationship between P and NP.
+I wish to emphasize that this version does not have a natural formalization as an NP-hard problem; specifically, it is difficult to imagine a presentation of the problem that does not give all utilities for subsets of the items up front, at which point picking an optimal member is trivially $O(n)$.\footnote{The related problem of picking uses for all items to maximize total utility is maximal matching for hypergraphs, which I believe is NP-complete.} But informally, I think this example hints at Avi Widgerson's idea \citeyearpar{widgerson2009creativity} that the P/NP distinction corresponds to the divide between ordinary thinking and creative insight --- that P corresponds naturally to straightforward problems of checking or verification, but the additional hardness of NP corresponds to the difficulty of invention or insight. It is ``hard'', in some informal sense of the word, to perceive potential relationships among objects, harder than it is simply to recognize them as individuals. As $n$ grows large, picking out combinations of items becomes a creative act, beyond the scope of simple ``rationality''.
 
 \section{Rationality --- a vague notion?}
-At this point, I would like to undermine the tractability criterion as originally stated --- that it is necessary that any rationality principle have a polynomial-time algorithm. For although I have argued against the adoption of decision principles that can solve general instances of DUTCHBOOK, I have not argued against Elga's claim that a rational agent must solve his specific \emph{instance} of DUTCHBOOK, consisting of the two simple bets A and B.
+At this point, I would like to undermine the tractability criterion as originally stated --- that it is necessary that any proposed principle of rationality have a polynomial-time algorithm. For although I have argued against the adoption of decision principles that can solve general instances of DUTCHBOOK, I have not argued against Elga's claim that a rational agent must solve his specific \emph{instance} of DUTCHBOOK, consisting of the two simple bets A and B.
 \begin{quote}
 I can only ask you to vividly imagine a case in which an agent rejects both bets A and B. Keep in mind that this agent cares only about money (her utility scale is linear), that she is certain in advance what bets will be offered, and that she is informed in advance that her state of opinion on the bet proposition will remain absolutely unchanged throughout the process. I invite you to agree with me that this agent has exhibited a departure from perfect rationality.
 \end{quote}
 And indeed I think Elga is right: a notion of rationality that doesn't require buying at least one of A and B is surely too weak. But what is the notion of rationality that Elga is appealing to? Can it be clarified?
 
-As we have seen, the general problem here is intractable. But that does not seem to undermine Elga's invitation, even if we pass from his easy instance of 1-VAL to an easy instance of 3-VAL. What seems to matter is the real-world tractability of the problem --- the fact that we can work through the four cases in our heads --- not the existence of a general solution in polynomial time.\footnote{The formal analogue of this is perhaps the following: any specific instance of any problem is always considered solvable in $O(1)$. Once the input has been fixed, any procedure that outputs the right answer can be regarded as having run in constant time.} It would, in my opinion, be entirely reasonable to say that an unsharp rational agent is obliged to run MMEU on small problems --- perhaps up to systems with 16 distinct states --- and I think Elga's argument is persuasive as long as the problem can be solved ``fast-in-practice''.
+As we have seen, the general problem here is intractable. But that does not seem to undermine Elga's invitation, even if we pass from his easy 1-Book to an easy 3-Book. What seems to matter is the real-world tractability of the problem --- the fact that we can work through the four cases in our heads --- not the existence of a general solution in polynomial time. It would, in my opinion, be entirely reasonable to say that an unsharp rational agent is obliged to run MMEU on small problems, perhaps up to systems with 16 distinct states --- and I think Elga's argument is persuasive as long as the problem can be solved ``fast-in-practice''.
 
-So P may not be a necessary condition for real-world tractability. But is it sufficient? The consensus seems to be that it is neither. An exponential-time algorithm may be fast in practice if the input sizes are small, but a polynomial-time algorithm may be unusable if the exponent (e.g., $O(n^{1000})$) or the constant factor is too high. I think that to date, the most thorough investigation of the problem of modeling tractability is the computer-scientific one, and that its results have been largely negative and inconclusive.
+So P may not be a necessary condition for real-world tractability. But is it sufficient? The consensus seems to be that it is neither. An exponential-time algorithm may be fast in practice if the input sizes are small, but a polynomial-time algorithm may be unusable if the exponent (e.g., $O(n^{1000})$) or the constant factor is too high. I think that to date, the best attempt to model computational tractability has been the complexity-theoretic one, and its main result has been negative: tractability is not characterized by any complexity class.
 
-My view is that ``rational agent'' is a notion analogous to the common law's elusive ``reasonable man'' --- when we invoke ``rationality'' we are appealing to an imprecise intuition rather than to something with ontological reality. It seems that our notion of rationality does (and should) vary with our standards of experience, education, and computational power.
+The picture of rationality that emerges from these considerations is something like this: for any specific problem, such as propositional book evaluation or the TSP, the rational agent should utilize the best available techniques, polynomial and superpolynomial, exact and approximate, and run them for a reasonable amount of time. If his techniques yield an optimal solution before his imprecise or precise-but-arbitrary cutoff, as MMEU does for Elga's Good Book, then rationality requires that he choose it and he is irrational if he does not. But if no such solution materializes, then rationality only constrains him to choose a good approximation.
+
+I am arguing that since the meaning of ``tractability'' is subject to the Sorites paradox, so is the meaning of ``rationality''. Three grains of sand are not a heap, and the agent who can't buy the Good Book or put the gas in the tank is irrational. But $10^{10}$ grains of sand are a heap, and the agent who can't solve a large 3SAT instance is not irrational. How much computational power does it take to be rational? The line may vary with the current state of the art in algorithm design, or even chip design. There is no fact of the matter. On this view, ``rational agent'' is a notion analogous to the common law's elusive ``reasonable man'' --- when we invoke decision-theoretic rationality we are appealing to an imprecise intuition rather than to something ontologically real.
+
+\section{Afterword}
+Paris quotes significantly more general hardness results than those given here. Here are some relevant ones:
+\begin{theorem}
+\label{linearConstraintsNPComplete}
+The problem of testing the consistency of a set of linear constraints on personal probability of the form
+$$\sum_{j=1}^r a_{ji} P(\phi_{ji}) = b_i$$
+where the $\phi$ are arbitrary propositional formulae, is NP-complete. (This includes constraints of the form $P(\phi) = b$ and $P(\phi \mid \psi) = c$, i.e., unconditional and conditional personal probabilities.)\footnote{There is also a positive result here: consistency is in NP, so the complement problem DUTCHBOOK is in co-NP.}
+\end{theorem}
+\begin{theorem}
+\label{simpleConstraintsNPHard}
+Theorem \ref{linearConstraintsNPComplete} still holds under any of the following restrictions:
+\begin{enumerate}
+\item
+Allowing only constraints $P(\phi_i) = b_i$, where the $\phi_i$ are 2-ary conjunctions.
+\item
+Allowing only constraints $P(p_i) = b_i$ and $P(p_i \mid p_j) = c_i$, where the $p_i$ are atoms.
+\end{enumerate}
+\end{theorem}
+The consistency problem is trivial under the following circumstances:
+\begin{definition}
+An \emph{Bayesian network} is a set of probability constraints of the form $P(p_i) = b_i$ and $P(p_i \mid \bigwedge_{j=1}^r q_{ij}) = c_i$, where the $p_i, q_{ij}$ are atoms and:
+\begin{enumerate}
+\item
+All atoms are conditionally independent except as specified.
+\item
+The directed graph of conditional dependence among atoms is acyclic.
+\end{enumerate}
+\end{definition}
+Every Bayesian network is consistent. But \cite{Cooper:1990:CCP:77754.77762} proves:
+
+\begin{theorem}
+\label{bayesNetNPHard}
+Deciding whether $P(p_i) > 0$, for $p_i$ a proposition in an arbitrary Bayesian network, is NP-complete. (However, the value of $P(p_i)$ can be approximated with probabilistic correctness in polynomial time, and if we restrict to networks without \emph{undirected} cycles (i.e., polytrees), we can compute the exact value in polynomial time.)
+\end{theorem}
+
+When I claimed that the EUM-agent has a tractable algorithm for book evaluation, I allowed the agent an oracle for personal probabilities; I took him at his word, so to speak. But now this is problematic for two reasons:
+\begin{enumerate}
+\item
+Imagine that an agent is testifying as to his personal probabilities. If they meet even the low bar for complexity described in Theorem \ref{simpleConstraintsNPHard}, I cannot in general determine whether his beliefs are logically possible.
+\item
+Imagine that an agent's personal probabilities form a Bayesian network. Unless this network has a restricted form, the agent cannot in general ``know his own mind'': he can't compute his exact personal probabilities for propositions.
+\end{enumerate}
+
+These facts seem to pose significant challenges for Bayesian knowledge representation. But they are addressed at a sophisticated level by the engineering literature on graphical models (see \cite{citeulike:3470282} for one survey), which fights them by restricting the problem space and moving to approximation algorithms. The picture here seems analogous to our earlier picture of decision-theoretic rationality: clean idealizations are replaced with messy approximations, and philosophy gives way, as it were, to engineering.
+
+On a different note, this paper focuses on the vagueness of Bayesian accounts of rationality in a purely technical context, with respect to a specific well-defined problem. Does this vagueness disappear once we leave the confines of propositional betting books for richer domains, such as science? I think that on the contrary, it becomes much worse. For example, \cite{garber1983} points out that systematizing all scientific activity within a ``global'' Bayesian framework would require constructing a universal language of science, in the sense of logical positivism and the Vienna Circle. This would be a striking regression from anti-foundationalism back to foundationalism! In general, claims that Bayesian probability can straightforwardly assimilate our epistemic activity seem to gloss over vital details. I think the purely quantitative vagueness discussed here is only the tip of an iceberg.
 
 \section{Acknowledgements}
-Thanks to Julian Jonker, Wes Holliday, Roy Frostig, Justin Vlasits, and Sherri Roush for helpful discussions.
+Thanks to Julian Jonker, Sherri Roush, Wes Holliday, Roy Frostig, Justin Vlasits, Adam Lesnikowski, and Matt Jones for helpful discussions.
+
+\bibliography{philosophy}
+
 \end{document}
