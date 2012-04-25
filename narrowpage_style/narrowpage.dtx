@@ -21,26 +21,26 @@
 % -------------------------------------------------
 %         This is a LaTeX package to set all margins to 1in or 1.5cm
 % Installation:
-%    LaTeX this file: creates docstrip installation file fullpage.ins
+%    LaTeX this file: creates docstrip installation file narrowpage.ins
 %                         AND the (LaTeX2e) documentation
-%    (La)TeX fullpage.ins: creates package files fullpage.sty, and optionally
-%                          doc driver fullpage.drv
-%    (fullpage.ins may be edited as needed)
+%    (La)TeX narrowpage.ins: creates package files narrowpage.sty, and optionally
+%                          doc driver narrowpage.drv
+%    (narrowpage.ins may be edited as needed)
 % Docstrip options available:
 %        package - to produce a (LaTeX2e) package .sty file 
 %        driver  - to produce a driver file to print the documentation
 %--------------------------------------------------------------------------
 %  *** Identify the package file:-
 %<package>\NeedsTeXFormat{LaTeX2e}[1994/06/01]
-%<package>\ProvidesPackage{fullpage}
+%<package>\ProvidesPackage{narrowpage}
 %
 %  *** Identify the driver file:-
 %<driver>\NeedsTeXFormat{LaTeX2e}
-%<driver>\ProvidesFile{fullpage.drv}
+%<driver>\ProvidesFile{narrowpage.drv}
 %
 %  *** The DATE, VERSION, and other INFO
 %\fi
-%\ProvidesFile{fullpage}
+%\ProvidesFile{narrowpage}
          [1999/02/23 1.1 (PWD)]
 % \changes{1.0}{1994 Feb 15}{Initial version}
 % \changes{1.0a}{1994 Jun 15}{Documentation as per \LaTeXe: driver at start}
@@ -71,8 +71,8 @@
 %^^A    It is written on first LaTeX run if it 
 %^^A    does not already exist
 %^^A =============================================
-\begin{filecontents*}{fullpage.ins}
-% File: fullpage.ins
+\begin{filecontents*}{narrowpage.ins}
+% File: narrowpage.ins
 % Copyright 1999 Patrick W. Daly
 %
 % This file can be redistributed and/or modified under the terms
@@ -124,15 +124,15 @@ End of documentation driver file.
 \keepsilent
 \askforoverwritefalse
 
-\generate{\file{fullpage.sty}{\from{fullpage.dtx}{package}}
-          \file{fullpage.drv}{\usepreamble\driver\usepostamble\driverq
-                           \from{fullpage.dtx}{driver}}
+\generate{\file{narrowpage.sty}{\from{narrowpage.dtx}{package}}
+          \file{narrowpage.drv}{\usepreamble\driver\usepostamble\driverq
+                           \from{narrowpage.dtx}{driver}}
          }
 
 \obeyspaces
 \Msg{*******************************************}%
-\Msg{* For documentation, process fullpage.dtx *}%
-\Msg{*    or the driver file      fullpage.drv *}%
+\Msg{* For documentation, process narrowpage.dtx *}%
+\Msg{*    or the driver file      narrowpage.drv *}%
 \Msg{*******************************************}
 
 \endbatchfile
@@ -163,7 +163,7 @@ End of documentation driver file.
 \CodelineNumbered %May stay
 
 \begin{document}
-   \DocInput{fullpage.dtx}
+   \DocInput{narrowpage.dtx}
 \end{document}
 %</driver>
 %\fi
@@ -192,7 +192,7 @@ End of documentation driver file.
 % \setlength{\IndexMin}{10cm}
 % \setcounter{StandardModuleDepth}{1}
 %
-% \GetFileInfo{fullpage}
+% \GetFileInfo{narrowpage}
 %
 % \title{\bfseries A Package to Set Margins to Full Page}
 %    
@@ -220,7 +220,7 @@ End of documentation driver file.
 % \begin{verbatim}
  % Sets all 4 margins to be either 1 inch or 1.5 cm, and specifies
  %  the page style
- % Call as    \usepackage[options]{fullpage}
+ % Call as    \usepackage[options]{narrowpage}
  % Options  =   in   (default) for 1 inch
  %              cm             for 1.5 cm
  %              plain (default) sets \pagestyle{plain}
