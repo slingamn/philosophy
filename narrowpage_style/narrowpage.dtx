@@ -353,20 +353,6 @@ End of documentation driver file.
 %    \end{macrocode}
 % \end{macro}
 % 
-% \begin{macro}{\textwidth}
-% \begin{macro}{\oddsidemargin}
-% \begin{macro}{\evensidemargin}
-% Calculate the width of the text from |\paperwidth| and set the left and
-% right margins. Recall that \TeX{} automatically leaves a margin of $1''$.
-%    \begin{macrocode}
-\setlength{\textwidth}{\paperwidth}
-\addtolength{\textwidth}{-2\FP@margin}
-\setlength{\oddsidemargin}{\FP@margin}
-\addtolength{\oddsidemargin}{-1in}
-\setlength{\evensidemargin}{\oddsidemargin}
-%    \end{macrocode}
-% \end{macro}\end{macro}\end{macro}
-% 
 % \begin{macro}{\textheight}
 % \begin{macro}{\topmargin}
 % Calculate the height of the text from |\paperwidth|, by removing the
