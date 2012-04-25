@@ -5,8 +5,19 @@
 \usepackage{natbib}
 \usepackage{url}
 
-\setlength{\voffset}{-1 in}
-\addtolength{\textheight}{2.15 in}
+% new margin settings cribbed from fullpage.sty
+% from the "plain" option?
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+% from the "empty" option?
+%\setlength{\footskip}{0pt}
+\setlength{\textheight}{\paperheight}
+\addtolength{\textheight}{-\headheight}
+\addtolength{\textheight}{-\headsep}
+\addtolength{\textheight}{-\footskip}
+\addtolength{\textheight}{-2in}
+\setlength{\topmargin}{1in}
+\addtolength{\topmargin}{-1in}
 
 \renewcommand{\implies}{\rightarrow}
 \newcommand{\pr}{\text{pr}}
