@@ -2,8 +2,15 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 
-\setlength{\voffset}{-1 in}
-\addtolength{\textheight}{2.15 in}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\textheight}{\paperheight}
+\addtolength{\textheight}{-\headheight}
+\addtolength{\textheight}{-\headsep}
+\addtolength{\textheight}{-\footskip}
+\addtolength{\textheight}{-2in}
+\setlength{\topmargin}{1in}
+\addtolength{\topmargin}{-1in}
 
 \renewcommand{\implies}{\rightarrow}
 \newcommand{\pr}{\text{pr}}
@@ -37,6 +44,8 @@ $\lor$ means ``or'' ($a \lor b$ is ``a or b is true'', i.e., ``at least one of a
 $\neg$ means ``not'' ($\neg a$ is ``a is not true'')
 \item
 $p \implies q$ means ``if p, then q'', equivalently, ``either p is false or q is true'', equivalently $\neg p \lor q$
+\item
+$p \leftrightarrow q$ means ``p if and only if q'', equivalently, both $p \implies q$ and $q \implies p$, equivalently ``p and q have the same truth value''.
 \end{enumerate}
 
 Exercises:
@@ -44,14 +53,20 @@ Exercises:
 \item
 Assume the sky is blue and the moon is made of rocks. Is the sentence ``if the sky is green, then the moon is made of blue cheese'' true or false?
 \item
+How about ``if the sky is green, then the moon is made of rocks''?
+\item
+How about ``the sky is green if and only if the moon is made of rocks''?
+\item
 If $p \implies q$ is true, is $q \implies p$ (the \emph{converse}) always true?
 \item
 If $p \implies q$ is true, is $\neg q \implies \neg p$ (the \emph{contrapositive}) always true?
 \item
 Express $a \lor b$ using only $\land$ and $\neg$. (This is called \emph{De Morgan's law}. It shows that $\land$ and $\neg$ are sufficient to express all of propositional logic.)
 \item
-The operator $\uparrow$ has these semantics: $a \uparrow b$ means ``either a is false or b is false''. Express all the other operators using $\uparrow$. (This operator is called \emph{NAND} or the \emph{Sheffer stroke}.)
+The operator $\uparrow$ has these semantics: $a \uparrow b$ means ``either a is false or b is false''. Express all the other operators using $\uparrow$. (This operator is called \emph{NAND} or the \emph{Sheffer stroke}. By the previous exercises and definitions, it is sufficient to express just $\neg$ and $\lor$ in terms of $\uparrow$. Do you see why?)
 \end{enumerate}
+
+\newpage
 
 \section{First-order logic}
 Read $\forall$ as ``for every'' and $\exists$ as ``there exists'.
@@ -59,7 +74,9 @@ Read $\forall$ as ``for every'' and $\exists$ as ``there exists'.
 Example: let $H(x, y)$ denote ``x cuts y's hair''. Then we can write ``there is someone who cuts everyone's hair`` as:
 $$\exists x \forall y H(x, y)$$
 and ``everyone has someone who cuts their hair'' as:
-$$\forall x \exists y H(y, x)$$
+$$\forall y \exists x H(x, y)$$
+
+These sentences are the same, except the order of the two quantifiers has been interchanged.
 
 Notice that $\exists x \phi(x)$ is equivalent to $\neg \forall x \neg \phi(x)$. (This relies on the assumption that at least one thing exists.)
 
@@ -70,6 +87,20 @@ Which one of these sentences implies the other? Are they equivalent?
 \item
 Write the negations of both sentences.
 \item
-Write the definition of limit using logical symbols. Then write its negation.
+If you are familiar with the definition of a limit in calculus, write the definition of a limit using these symbols.
+\end{enumerate}
+
+\section{Basic proofs}
+Prove or disprove:
+
+\begin{enumerate}
+\item
+If $x$ is irrational, then $px$ is irrational for all $p \in \mathbb{Q}$.
+\item
+If $x$ is irrational, then $x^2$ is irrational.
+\item
+$\forall n \in \mathbb{N} (5n^2 > n!)$
+\item
+If $a$ is a positive integer, then $a^2$ is even if and only if $a$ is even.
 \end{enumerate}
 \end{document}
