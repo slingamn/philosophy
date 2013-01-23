@@ -149,19 +149,13 @@ We have known upper bounds on $s_3$, the best due to \cite{DBLP:journals/corr/ab
 3-SAT is solvable in $O((\frac{4}{3} + \epsilon)^{n}) \approx O(2^{0.416n})$, for arbitrarily small $\epsilon > 0$. Consequently, $s_3 \leq 0.416$.
 \end{theorem}
 
-So there are solutions to 3-SAT that asymptotically outperform brute force, despite still being exponential.\footnote{In passing, although the ETH only talks about deterministic algorithms, the best known randomized algorithms for $k$-SAT are also exponential.} But in the general case, we have another conjecture by the same authors:
+So there are solutions to 3-SAT that asymptotically outperform brute force, despite still being exponential.\footnote{In passing, although the ETH only talks about deterministic algorithms, the best known randomized algorithms for $k$-SAT are also exponential.} But in the general case, we have a (slightly stronger again) conjecture by the same authors:
 
 \begin{conjecture}[Strong ETH]
 $\lim_{k \to \infty} s_k = 1$.
 \end{conjecture}
 
-The Strong ETH says that  says that for larger and larger values of $k$, the optimal solution of $k$-SAT regresses progressively to the brute-force $O(2^n)$ solution that tests all possible assignments. Moreover, \cite{Williams:2010:IES:1806689.1806723} proves the following theorem:
-
-\begin{theorem}
-Suppose there is a superpolynomial function $s(n)$ such that SAT for Boolean circuits with $n$ variables and $n^k$ gates can be solved in $2^n \cdot \text{poly}(n^k)/s(n)$ time, for all $k$. Then $\text{NEXP} \not \subseteq P/\text{poly}$.
-\end{theorem}
-
-Since the consequent of this implication is believed to be false, so is the antecedent; the nonexistence of such an $s(n)$ would imply that we cannot improve on $O(2^n)$ brute-force search for SAT.
+The Strong ETH says that for larger and larger values of $k$, the optimal solution of $k$-SAT regresses progressively to the brute-force $O(2^n)$ solution that tests all possible assignments.
 
 I will idiosyncratically refer to the problem of deciding whether a propositional formula is a tautology as VAL (for ``validity''). The specific form of VAL where the formulae are 3-ary conjunctions of positive or negated atoms (by analogy with 3SAT) will be called 3VAL. VAL and 3VAL are unlikely to be in NP (they naturally fall in co-NP instead), but since they are the complement problems of SAT and 3SAT, they are as hard:
 
@@ -468,7 +462,7 @@ These facts seem to pose significant challenges for Bayesian knowledge represent
 On a different note, this paper focuses on the vagueness of Bayesian accounts of rationality in a purely technical context, with respect to a specific well-defined problem. Does this vagueness disappear once we leave the confines of propositional betting books for richer domains, such as science? I think that on the contrary, it becomes much worse. For example, \cite{garber1983} points out that systematizing all scientific activity within a ``global'' Bayesian framework would require constructing a universal language of science, in the sense of logical positivism and the Vienna Circle. This would be a striking regression from anti-foundationalism back to foundationalism! In general, claims that Bayesian probability can straightforwardly assimilate our epistemic activity seem to gloss over vital details. I think the purely quantitative vagueness discussed here is only the tip of an iceberg.
 
 \section{Acknowledgements}
-Thanks to Julian Jonker, Sherri Roush, Wes Holliday, Roy Frostig, Justin Vlasits, Adam Lesnikowski, Matt Jones, Umesh Vazirani, and Justin Bledin for helpful discussions.
+Thanks to Julian Jonker, Sherri Roush, Wes Holliday, Roy Frostig, Justin Vlasits, Adam Lesnikowski, Matt Jones, Umesh Vazirani, Justin Bledin, and Scott Aaronson for helpful discussions.
 
 \bibliography{philosophy}
 
